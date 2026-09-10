@@ -6,14 +6,16 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "🇵🇭 PH 01 - Cicada_YH"
+        "🇧🇷 BR 01 - Cicada_YH",
+        "🇧🇷 BR 02 - Cicada_YH"
       ]
     },
     {
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "🇵🇭 PH 01 - Cicada_YH"
+        "🇧🇷 BR 01 - Cicada_YH",
+        "🇧🇷 BR 02 - Cicada_YH"
       ],
       "url": "https://www.google.com/generate_204"
     },

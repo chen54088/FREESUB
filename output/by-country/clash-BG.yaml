@@ -25,26 +25,8 @@ proxies:
   ws-opts:
     path: /
     headers:
-      Host: 192.145.31.5
+      Host: neth9.lunariai.ru
 - name: 🇧🇬 BG 03 - Cicada_YH
-  type: vless
-  server: 192.145.31.5
-  port: 8443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: neth9.lunariai.ru
-- name: 🇧🇬 BG 04 - Cicada_YH
-  type: vless
-  server: 192.145.31.5
-  port: 8443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: neth9.lunariai.ru
-- name: 🇧🇬 BG 05 - Cicada_YH
   type: vless
   server: 192.145.31.5
   port: 443
@@ -57,6 +39,28 @@ proxies:
     path: /
     headers:
       Host: 192.145.31.5
+- name: 🇧🇬 BG 04 - Cicada_YH
+  type: vless
+  server: 192.145.31.5
+  port: 443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
+  udp: true
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 192.145.31.5
+- name: 🇧🇬 BG 05 - Cicada_YH
+  type: vless
+  server: 192.145.31.5
+  port: 8443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: neth9.lunariai.ru
 - name: 🇧🇬 BG 06 - Cicada_YH
   type: vless
   server: 192.145.31.5
@@ -84,6 +88,19 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: neth9.lunariai.ru
+- name: 🇧🇬 BG 09 - Cicada_YH
+  type: vless
+  server: 192.145.31.5
+  port: 443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
+  udp: true
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 192.145.31.5
 proxy-groups:
 - name: PROXIES
   type: select
@@ -97,6 +114,7 @@ proxy-groups:
   - 🇧🇬 BG 06 - Cicada_YH
   - 🇧🇬 BG 07 - Cicada_YH
   - 🇧🇬 BG 08 - Cicada_YH
+  - 🇧🇬 BG 09 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -110,5 +128,6 @@ proxy-groups:
   - 🇧🇬 BG 06 - Cicada_YH
   - 🇧🇬 BG 07 - Cicada_YH
   - 🇧🇬 BG 08 - Cicada_YH
+  - 🇧🇬 BG 09 - Cicada_YH
 rules:
 - MATCH,PROXIES
