@@ -6,16 +6,16 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "🇪🇬 EG 01 - xiaohe",
-        "🇪🇬 EG 02 - xiaohe"
+        "🇪🇬 EG 01 - Cicada_YH",
+        "🇪🇬 EG 02 - Cicada_YH"
       ]
     },
     {
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "🇪🇬 EG 01 - xiaohe",
-        "🇪🇬 EG 02 - xiaohe"
+        "🇪🇬 EG 01 - Cicada_YH",
+        "🇪🇬 EG 02 - Cicada_YH"
       ],
       "url": "https://www.google.com/generate_204"
     },

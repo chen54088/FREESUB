@@ -4,20 +4,16 @@ allow-lan: true
 mode: rule
 log-level: info
 proxies:
-- name: 🇧🇬 BG 01 - xiaohe
+- name: 🇧🇬 BG 01 - Cicada_YH
   type: vless
-  server: 50.62.194.40
-  port: 8880
-  uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+  server: 192.145.31.5
+  port: 8443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
   udp: true
-  tls: false
+  tls: true
   skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: vms.lifetime37.workers.dev
-- name: 🇧🇬 BG 02 - xiaohe
+  servername: neth9.lunariai.ru
+- name: 🇧🇬 BG 02 - Cicada_YH
   type: vless
   server: 192.145.31.5
   port: 443
@@ -30,7 +26,47 @@ proxies:
     path: /
     headers:
       Host: 192.145.31.5
-- name: 🇧🇬 BG 03 - xiaohe
+- name: 🇧🇬 BG 03 - Cicada_YH
+  type: vless
+  server: 192.145.31.5
+  port: 8443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: neth9.lunariai.ru
+- name: 🇧🇬 BG 04 - Cicada_YH
+  type: vless
+  server: 192.145.31.5
+  port: 8443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: neth9.lunariai.ru
+- name: 🇧🇬 BG 05 - Cicada_YH
+  type: vless
+  server: 192.145.31.5
+  port: 443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
+  udp: true
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 192.145.31.5
+- name: 🇧🇬 BG 06 - Cicada_YH
+  type: vless
+  server: 192.145.31.5
+  port: 8443
+  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: neth9.lunariai.ru
+- name: 🇧🇬 BG 07 - Cicada_YH
   type: vless
   server: 192.145.31.5
   port: 8443
@@ -39,7 +75,7 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: 192.145.31.5
-- name: 🇧🇬 BG 04 - xiaohe
+- name: 🇧🇬 BG 08 - Cicada_YH
   type: vless
   server: 192.145.31.5
   port: 8443
@@ -48,101 +84,31 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: neth9.lunariai.ru
-- name: 🇧🇬 BG 05 - xiaohe
-  type: vless
-  server: 192.145.31.5
-  port: 8443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: neth9.lunariai.ru
-- name: 🇧🇬 BG 06 - xiaohe
-  type: vless
-  server: 192.145.31.5
-  port: 443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 192.145.31.5
-- name: 🇧🇬 BG 07 - xiaohe
-  type: vless
-  server: 192.145.31.5
-  port: 443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: neth9.lunariai.ru
-- name: 🇧🇬 BG 08 - xiaohe
-  type: vless
-  server: 192.145.31.5
-  port: 8443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: neth9.lunariai.ru
-- name: 🇧🇬 BG 09 - xiaohe
-  type: vless
-  server: 192.145.31.5
-  port: 443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 192.145.31.5
-- name: 🇧🇬 BG 10 - xiaohe
-  type: vless
-  server: 192.145.31.5
-  port: 8443
-  uuid: 9f73cf9a-c68f-4e6d-90f0-e66b64f52f8a
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: 192.145.31.5
 proxy-groups:
 - name: PROXIES
   type: select
   proxies:
   - AUTO
-  - 🇧🇬 BG 01 - xiaohe
-  - 🇧🇬 BG 02 - xiaohe
-  - 🇧🇬 BG 03 - xiaohe
-  - 🇧🇬 BG 04 - xiaohe
-  - 🇧🇬 BG 05 - xiaohe
-  - 🇧🇬 BG 06 - xiaohe
-  - 🇧🇬 BG 07 - xiaohe
-  - 🇧🇬 BG 08 - xiaohe
-  - 🇧🇬 BG 09 - xiaohe
-  - 🇧🇬 BG 10 - xiaohe
+  - 🇧🇬 BG 01 - Cicada_YH
+  - 🇧🇬 BG 02 - Cicada_YH
+  - 🇧🇬 BG 03 - Cicada_YH
+  - 🇧🇬 BG 04 - Cicada_YH
+  - 🇧🇬 BG 05 - Cicada_YH
+  - 🇧🇬 BG 06 - Cicada_YH
+  - 🇧🇬 BG 07 - Cicada_YH
+  - 🇧🇬 BG 08 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
   interval: 300
   proxies:
-  - 🇧🇬 BG 01 - xiaohe
-  - 🇧🇬 BG 02 - xiaohe
-  - 🇧🇬 BG 03 - xiaohe
-  - 🇧🇬 BG 04 - xiaohe
-  - 🇧🇬 BG 05 - xiaohe
-  - 🇧🇬 BG 06 - xiaohe
-  - 🇧🇬 BG 07 - xiaohe
-  - 🇧🇬 BG 08 - xiaohe
-  - 🇧🇬 BG 09 - xiaohe
-  - 🇧🇬 BG 10 - xiaohe
+  - 🇧🇬 BG 01 - Cicada_YH
+  - 🇧🇬 BG 02 - Cicada_YH
+  - 🇧🇬 BG 03 - Cicada_YH
+  - 🇧🇬 BG 04 - Cicada_YH
+  - 🇧🇬 BG 05 - Cicada_YH
+  - 🇧🇬 BG 06 - Cicada_YH
+  - 🇧🇬 BG 07 - Cicada_YH
+  - 🇧🇬 BG 08 - Cicada_YH
 rules:
 - MATCH,PROXIES

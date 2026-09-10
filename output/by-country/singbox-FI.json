@@ -6,28 +6,22 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "🇫🇮 FI 01 - xiaohe",
-        "🇫🇮 FI 02 - xiaohe",
-        "🇫🇮 FI 03 - xiaohe",
-        "🇫🇮 FI 04 - xiaohe",
-        "🇫🇮 FI 05 - xiaohe",
-        "🇫🇮 FI 06 - xiaohe",
-        "🇫🇮 FI 07 - xiaohe",
-        "🇫🇮 FI 08 - xiaohe"
+        "🇫🇮 FI 01 - Cicada_YH",
+        "🇫🇮 FI 02 - Cicada_YH",
+        "🇫🇮 FI 03 - Cicada_YH",
+        "🇫🇮 FI 04 - Cicada_YH",
+        "🇫🇮 FI 05 - Cicada_YH"
       ]
     },
     {
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "🇫🇮 FI 01 - xiaohe",
-        "🇫🇮 FI 02 - xiaohe",
-        "🇫🇮 FI 03 - xiaohe",
-        "🇫🇮 FI 04 - xiaohe",
-        "🇫🇮 FI 05 - xiaohe",
-        "🇫🇮 FI 06 - xiaohe",
-        "🇫🇮 FI 07 - xiaohe",
-        "🇫🇮 FI 08 - xiaohe"
+        "🇫🇮 FI 01 - Cicada_YH",
+        "🇫🇮 FI 02 - Cicada_YH",
+        "🇫🇮 FI 03 - Cicada_YH",
+        "🇫🇮 FI 04 - Cicada_YH",
+        "🇫🇮 FI 05 - Cicada_YH"
       ],
       "url": "https://www.google.com/generate_204"
     },

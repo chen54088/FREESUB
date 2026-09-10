@@ -4,14 +4,7 @@ allow-lan: true
 mode: rule
 log-level: info
 proxies:
-- name: 🇸🇪 SE 01 - xiaohe
-  type: ss
-  server: 70.34.212.124
-  port: 8388
-  cipher: aes-256-gcm
-  password: AxIYWtskJWIIaefW
-  udp: true
-- name: 🇸🇪 SE 02 - xiaohe
+- name: 🇸🇪 SE 01 - Cicada_YH
   type: vless
   server: 202.155.11.249
   port: 443
@@ -25,7 +18,7 @@ proxies:
     path: /cdn/v3/live
     headers:
       Host: cf2.rumedia-cdn.com
-- name: 🇸🇪 SE 03 - xiaohe
+- name: 🇸🇪 SE 02 - Cicada_YH
   type: vless
   server: 202.155.11.249
   port: 443
@@ -44,16 +37,14 @@ proxy-groups:
   type: select
   proxies:
   - AUTO
-  - 🇸🇪 SE 01 - xiaohe
-  - 🇸🇪 SE 02 - xiaohe
-  - 🇸🇪 SE 03 - xiaohe
+  - 🇸🇪 SE 01 - Cicada_YH
+  - 🇸🇪 SE 02 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
   interval: 300
   proxies:
-  - 🇸🇪 SE 01 - xiaohe
-  - 🇸🇪 SE 02 - xiaohe
-  - 🇸🇪 SE 03 - xiaohe
+  - 🇸🇪 SE 01 - Cicada_YH
+  - 🇸🇪 SE 02 - Cicada_YH
 rules:
 - MATCH,PROXIES

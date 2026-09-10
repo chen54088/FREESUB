@@ -4,7 +4,7 @@ allow-lan: true
 mode: rule
 log-level: info
 proxies:
-- name: 🇪🇪 EE 01 - xiaohe
+- name: 🇪🇪 EE 01 - Cicada_YH
   type: vless
   server: 94.183.170.135
   port: 443
@@ -17,7 +17,7 @@ proxies:
     path: /
     headers:
       Host: 94.183.170.135
-- name: 🇪🇪 EE 02 - xiaohe
+- name: 🇪🇪 EE 02 - Cicada_YH
   type: vless
   server: 94.183.170.135
   port: 8443
@@ -26,48 +26,7 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: estproxy4.lockdwn.com
-- name: 🇪🇪 EE 03 - xiaohe
-  type: vless
-  server: 94.183.170.135
-  port: 8443
-  uuid: 06c4e938-2954-478f-a870-ca1b163e30e9
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: estproxy4.lockdwn.com
-- name: 🇪🇪 EE 04 - xiaohe
-  type: vless
-  server: 104.24.31.89
-  port: 443
-  uuid: aebe5a70-0ca3-46ce-8208-8b5bab1346ce
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: rAyAn-007.nAsTaRaN.DpDnS.OrG
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: rayan-007.nastaran.dpdns.org
-- name: 🇪🇪 EE 05 - xiaohe
-  type: vless
-  server: 94.183.170.135
-  port: 8443
-  uuid: 06c4e938-2954-478f-a870-ca1b163e30e9
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: estproxy4.lockdwn.com
-- name: 🇪🇪 EE 06 - xiaohe
-  type: vless
-  server: 94.183.170.135
-  port: 8443
-  uuid: 06c4e938-2954-478f-a870-ca1b163e30e9
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: estproxy4.lockdwn.com
-- name: 🇪🇪 EE 07 - xiaohe
+- name: 🇪🇪 EE 03 - Cicada_YH
   type: vless
   server: 94.183.170.135
   port: 443
@@ -80,7 +39,7 @@ proxies:
     path: /
     headers:
       Host: 94.183.170.135
-- name: 🇪🇪 EE 08 - xiaohe
+- name: 🇪🇪 EE 04 - Cicada_YH
   type: vless
   server: 94.183.170.135
   port: 8443
@@ -89,7 +48,7 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: estproxy4.lockdwn.com
-- name: 🇪🇪 EE 09 - xiaohe
+- name: 🇪🇪 EE 05 - Cicada_YH
   type: vless
   server: 94.183.170.135
   port: 8443
@@ -98,60 +57,25 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: estproxy4.lockdwn.com
-- name: 🇪🇪 EE 10 - xiaohe
-  type: vless
-  server: 94.183.170.135
-  port: 8443
-  uuid: 06c4e938-2954-478f-a870-ca1b163e30e9
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: estproxy4.lockdwn.com
-- name: 🇪🇪 EE 11 - xiaohe
-  type: vless
-  server: 104.24.30.89
-  port: 443
-  uuid: aebe5a70-0ca3-46ce-8208-8b5bab1346ce
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: rAyAn-007.nAsTaRaN.DpDnS.OrG
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: rayan-007.nastaran.dpdns.org
 proxy-groups:
 - name: PROXIES
   type: select
   proxies:
   - AUTO
-  - 🇪🇪 EE 01 - xiaohe
-  - 🇪🇪 EE 02 - xiaohe
-  - 🇪🇪 EE 03 - xiaohe
-  - 🇪🇪 EE 04 - xiaohe
-  - 🇪🇪 EE 05 - xiaohe
-  - 🇪🇪 EE 06 - xiaohe
-  - 🇪🇪 EE 07 - xiaohe
-  - 🇪🇪 EE 08 - xiaohe
-  - 🇪🇪 EE 09 - xiaohe
-  - 🇪🇪 EE 10 - xiaohe
-  - 🇪🇪 EE 11 - xiaohe
+  - 🇪🇪 EE 01 - Cicada_YH
+  - 🇪🇪 EE 02 - Cicada_YH
+  - 🇪🇪 EE 03 - Cicada_YH
+  - 🇪🇪 EE 04 - Cicada_YH
+  - 🇪🇪 EE 05 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
   interval: 300
   proxies:
-  - 🇪🇪 EE 01 - xiaohe
-  - 🇪🇪 EE 02 - xiaohe
-  - 🇪🇪 EE 03 - xiaohe
-  - 🇪🇪 EE 04 - xiaohe
-  - 🇪🇪 EE 05 - xiaohe
-  - 🇪🇪 EE 06 - xiaohe
-  - 🇪🇪 EE 07 - xiaohe
-  - 🇪🇪 EE 08 - xiaohe
-  - 🇪🇪 EE 09 - xiaohe
-  - 🇪🇪 EE 10 - xiaohe
-  - 🇪🇪 EE 11 - xiaohe
+  - 🇪🇪 EE 01 - Cicada_YH
+  - 🇪🇪 EE 02 - Cicada_YH
+  - 🇪🇪 EE 03 - Cicada_YH
+  - 🇪🇪 EE 04 - Cicada_YH
+  - 🇪🇪 EE 05 - Cicada_YH
 rules:
 - MATCH,PROXIES
