@@ -19,9 +19,19 @@ const repoUrl = (process.env.REPO_URL || 'https://github.com/chen54088/FREESUB')
   .replace(/\\_/g, '_')
   .replace(/\s+/g, '');
 const profile = process.env.PW_PROFILE || './.playwright-github';
+const edgeCandidates = [
+  process.env.EDGE_PATH,
+  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+  'C:/Program Files/Microsoft/Edge/Application/msedge.exe'
+].filter(Boolean);
+const edgePath = edgeCandidates.find((candidate) => fs.existsSync(candidate));
+if (!edgePath) {
+  console.error('找不到 Edge。请设置 EDGE_PATH 指向 msedge.exe。');
+  process.exit(1);
+}
 let browser;
 try {
-  browser = await chromium.launchPersistentContext(profile, { headless: false });
+  browser = await chromium.launchPersistentContext(profile, { headless: false, executablePath: edgePath });
 } catch (error) {
   if (String(error).includes("Executable doesn't exist")) {
     console.error('本机没有 Playwright 浏览器内核。先运行：npx playwright install chromium，然后重新运行本脚本。');
