@@ -1,0 +1,7 @@
+name = "freesub-subscription-gateway"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+[vars]
+GITHUB_OWNER = "chen54088"
+GITHUB_REPO = "FREESUB"
+GITHUB_BRANCH = "main"

@@ -1037,38 +1037,15 @@ def update_readme():
         normal_rows.append(f"| {flag} {name} | {cnt} | {col_v2} | {col_clash} | {col_sb} |")
     normal_table_str = "\n".join(normal_rows) if normal_rows else "| 暂无可用节点 | 0 | - | - | - |"
 
-    worker_code = """```javascript
-export default {
-  async fetch(request) {
-    const GITHUB_TOKEN = "ghp_你的GitHub永久访问令牌";
-    const OWNER = "hezhanleiok";
-    const REPO = "freesub";
-    const BRANCH = "main";
+    worker_code = """部署仓库内 `cloudflare-worker/worker.js`。令牌只放 Cloudflare Secret，不写进 README 或代码：
 
-    const url = new URL(request.url);
-    const filePath = "output" + url.pathname;
-    const ghUrl = "[https://raw.githubusercontent.com/](https://raw.githubusercontent.com/)" + OWNER + "/" + REPO + "/" + BRANCH + "/" + filePath;
-    
-    const res = await fetch(ghUrl, {
-      headers: {
-        "Authorization": "token " + GITHUB_TOKEN,
-        "User-Agent": "Cloudflare-Worker"
-      }
-    });
+```powershell
+npx wrangler secret put GITHUB_TOKEN
+npx wrangler secret put SUBSCRIPTION_KEY
+npx wrangler deploy cloudflare-worker
+```
 
-    if (!res.ok) {
-      return new Response("Not Found", { status: 404 });
-    }
-
-    return new Response(await res.text(), {
-      headers: { 
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-cache" 
-      }
-    });
-  }
-}
-```"""
+Worker 只允许读取 output 生成文件，并支持 `Authorization: Bearer <SUBSCRIPTION_KEY>`。"""
 
     readme_content = f"""# 🚀 免费节点自动测活订阅池 (含真实家宽/住宅IP甄选)
 

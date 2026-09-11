@@ -77,17 +77,17 @@
 ### 1. 获取 GitHub 永久个人令牌 (PAT)
 1. 进入 GitHub -> **Settings** -> **Developer Settings** -> **Personal access tokens (classic)**。
 2. 点击 **Generate new token (classic)**，勾选 `repo` 权限，有效期设为 `No expiration`（永不过期）。
-3. 复制保存生成的以 `ghp_` 开头的 Token。
+3. 将令牌只保存到 Cloudflare Worker Secret，不要写入仓库文件。
 
 ### 2. 部署 Cloudflare Worker
 登录 Cloudflare Dashboard，创建一个新的 Worker，复制以下脚本粘贴并部署：
 
 ```javascript
 export default {
-  async fetch(request) {
-    const GITHUB_TOKEN = "ghp_你的GitHub永久访问令牌";
-    const OWNER = "hezhanleiok";
-    const REPO = "freesub";
+  async fetch(request, env) {
+    const GITHUB_TOKEN = env.GITHUB_TOKEN;
+    const OWNER = "chen54088";
+    const REPO = "FREESUB";
     const BRANCH = "main";
 
     const url = new URL(request.url);
