@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-09-11T04:49:06.022464+00:00",
+  "alive_nodes": 1102,
+  "confirmed_egress_nodes": 691,
+  "high_confidence_residential_nodes": 8,
+  "unconfirmed_egress_nodes": 411,
+  "country_cap": 20,
+  "residential_country_cap": 10
+}
