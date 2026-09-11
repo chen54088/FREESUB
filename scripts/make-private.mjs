@@ -23,7 +23,7 @@ let browser;
 try {
   browser = await chromium.launchPersistentContext(profile, { headless: false });
 } catch (error) {
-  if (String(error).includes('Executable doesn't exist')) {
+  if (String(error).includes("Executable doesn't exist")) {
     console.error('本机没有 Playwright 浏览器内核。先运行：npx playwright install chromium，然后重新运行本脚本。');
   }
   throw error;
