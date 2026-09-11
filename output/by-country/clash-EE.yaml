@@ -5,6 +5,14 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇪🇪 EE 01 - Cicada_YH
+  type: trojan
+  server: 109.206.241.10
+  port: 449
+  password: oiiaB38ywjEHCWRs_O_a_1113_Il_KeyyyHop_Bes1
+  udp: true
+  sni: 109.206.241.10
+  skip-cert-verify: true
+- name: 🇪🇪 EE 02 - Cicada_YH
   type: vless
   server: 94.183.170.135
   port: 8443
@@ -19,11 +27,13 @@ proxy-groups:
   proxies:
   - AUTO
   - 🇪🇪 EE 01 - Cicada_YH
+  - 🇪🇪 EE 02 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
   interval: 300
   proxies:
   - 🇪🇪 EE 01 - Cicada_YH
+  - 🇪🇪 EE 02 - Cicada_YH
 rules:
 - MATCH,PROXIES
