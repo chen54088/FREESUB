@@ -14,10 +14,9 @@ if (!playwrightPath) {
 const playwrightModule = await import(pathToFileURL(playwrightPath).href);
 const { chromium } = playwrightModule.default || playwrightModule;
 
-const repoUrl = (process.env.REPO_URL || 'https://github.com/chen54088/FREESUB')
-  .replace(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/, '$2')
-  .replace(/\\_/g, '_')
-  .replace(/\s+/g, '');
+const rawRepoUrl = process.env.REPO_URL || 'https://github.com/chen54088/FREESUB';
+const repoMatch = rawRepoUrl.match(/https?:\/\/(?:www\.)?github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+/i);
+const repoUrl = (repoMatch ? repoMatch[0] : rawRepoUrl).replace(/\\_/g, '_').replace(/\s+/g, '').replace(/\/$/, '');
 const profile = process.env.PW_PROFILE || './.playwright-github';
 const edgeCandidates = [
   process.env.EDGE_PATH,
@@ -39,14 +38,29 @@ try {
   throw error;
 }
 const page = await browser.newPage();
-await page.goto(`${repoUrl}/settings`, { waitUntil: 'domcontentloaded' });
+async function gotoWithRetry(url) {
+  let lastError;
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      return;
+    } catch (error) {
+      lastError = error;
+      console.log(`GitHub 连接重试 ${attempt}/4...`);
+      await new Promise(resolve => setTimeout(resolve, attempt * 2500));
+    }
+  }
+  throw lastError;
+}
+
+await gotoWithRetry(`${repoUrl}/settings`);
 
 if (page.url().includes('/login')) {
   console.log('请在弹出的 GitHub 窗口完成登录/验证码，完成后回到仓库 Settings 页面。');
   await page.waitForURL(/github\.com\/.+\/.+\/settings/, { timeout: 0 });
 }
 
-await page.goto(`${repoUrl}/settings`, { waitUntil: 'networkidle' });
+await gotoWithRetry(`${repoUrl}/settings`);
 await page.getByRole('heading', { name: /Danger Zone/i }).scrollIntoViewIfNeeded().catch(() => {});
 const change = page.getByText(/Change repository visibility/i).first();
 await change.waitFor({ state: 'visible', timeout: 30000 });
