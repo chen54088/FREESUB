@@ -806,8 +806,16 @@ def format_node_group(nodes_list, res_tag_force=False):
 
 def export_subscriptions(verified_nodes):
     ensure_directories()
-    residential_nodes = [n for n in verified_nodes if n["is_residential"]]
-    relaxed_residential_nodes = [n for n in verified_nodes if n.get("is_relaxed_residential", False)]
+    def best_by_exit(nodes):
+        selected = {}
+        for node in sorted(nodes, key=lambda n: (-n["quality_score"], n["delay"])):
+            key = node.get("exit_ip") or node.get("link")
+            selected.setdefault(key, node)
+        return list(selected.values())
+
+    # One physical egress IP must appear at most once in either residential feed.
+    residential_nodes = best_by_exit([n for n in verified_nodes if n["is_residential"]])
+    relaxed_residential_nodes = best_by_exit([n for n in verified_nodes if n.get("is_relaxed_residential", False)])
     # Regional feeds only contain a confirmed proxy egress. Nodes without that
     # evidence remain visible in metadata but never get a misleading country tag.
     confirmed_nodes = [n for n in verified_nodes if n["exit_ip_confirmed"] and n["country"] != "OTHER"]
