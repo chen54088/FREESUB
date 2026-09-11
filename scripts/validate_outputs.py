@@ -38,6 +38,14 @@ def main():
             raise ValueError("Residential node lacks confirmed egress IP")
         if node["country"] != "OTHER" and not node["exit_ip_confirmed"]:
             raise ValueError("Country-classified node lacks confirmed egress IP")
+        if node.get("residential_relaxed", False) and (not node["exit_ip_confirmed"] or node["country"] == "OTHER"):
+            raise ValueError("Relaxed residential node lacks confirmed country egress")
+        tier = node.get("residential_tier", "C")
+        score = int(node.get("residential_confidence", 0))
+        if tier == "A" and score < 80:
+            raise ValueError("Residential tier A has score below 80")
+        if tier == "B" and not 65 <= score < 80:
+            raise ValueError("Residential tier B score is outside 65..79")
     print(f"Validated {len(nodes)} nodes and generated subscription files.")
 
 

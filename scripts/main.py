@@ -814,8 +814,8 @@ def export_subscriptions(verified_nodes):
         return list(selected.values())
 
     # One physical egress IP must appear at most once in either residential feed.
-    residential_nodes = best_by_exit([n for n in verified_nodes if n["is_residential"]])
-    relaxed_residential_nodes = best_by_exit([n for n in verified_nodes if n.get("is_relaxed_residential", False)])
+    residential_nodes = best_by_exit([n for n in verified_nodes if n["is_residential"] and n["exit_ip_confirmed"] and n["country"] != "OTHER"])
+    relaxed_residential_nodes = best_by_exit([n for n in verified_nodes if n.get("is_relaxed_residential", False) and n["exit_ip_confirmed"] and n["country"] != "OTHER"])
     # Regional feeds only contain a confirmed proxy egress. Nodes without that
     # evidence remain visible in metadata but never get a misleading country tag.
     confirmed_nodes = [n for n in verified_nodes if n["exit_ip_confirmed"] and n["country"] != "OTHER"]
