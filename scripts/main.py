@@ -9,6 +9,7 @@ import zipfile
 import base64
 import shutil
 import socket
+import hashlib
 import urllib.request
 import urllib.parse
 import subprocess
@@ -34,11 +35,23 @@ SOURCE_URLS = [
 OUTPUT_DIR = "output"
 COUNTRY_DIR = os.path.join(OUTPUT_DIR, "by-country")
 RESIDENTIAL_COUNTRY_DIR = os.path.join(OUTPUT_DIR, "residential-by-country")
+METADATA_DIR = os.path.join(OUTPUT_DIR, "metadata")
+
+# A node is allowed into a country or residential feed only after at least two
+# independent services report the same proxy egress IP.
+EXIT_IP_CHECKS = (
+    ("ipify", "https://api.ipify.org?format=json"),
+    ("ifconfig", "https://ifconfig.co/json"),
+    ("cloudflare", "https://1.1.1.1/cdn-cgi/trace"),
+)
+MAX_NODES_PER_COUNTRY = 20
+MAX_RESIDENTIAL_NODES_PER_COUNTRY = 10
 
 def ensure_directories():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     os.makedirs(COUNTRY_DIR, exist_ok=True)
     os.makedirs(RESIDENTIAL_COUNTRY_DIR, exist_ok=True)
+    os.makedirs(METADATA_DIR, exist_ok=True)
 
 ensure_directories()
 
@@ -432,6 +445,7 @@ def convert_to_clash_dict(node_str, name):
             return proxy
         elif proto == "trojan":
             srv = outbound["settings"]["servers"][0]
+            stream = outbound["streamSettings"]
             return {
                 "name": name,
                 "type": "trojan",
@@ -467,6 +481,37 @@ def convert_to_clash_dict(node_str, name):
     except Exception:
         pass
     return None
+
+def fetch_proxy_exit_ip(session, proxies, url):
+    try:
+        response = session.get(url, proxies=proxies, timeout=4.0)
+        if response.status_code != 200:
+            return None
+        if "cdn-cgi/trace" in url:
+            match = re.search(r"^ip=([^\\r\\n]+)", response.text, re.MULTILINE)
+            return match.group(1).strip() if match else None
+        return response.json().get("ip")
+    except Exception:
+        return None
+
+
+def confirm_proxy_exit_ip(session, proxies):
+    observed = []
+    for _, check_url in EXIT_IP_CHECKS:
+        value = fetch_proxy_exit_ip(session, proxies, check_url)
+        if not value:
+            continue
+        try:
+            observed.append(str(ipaddress.ip_address(value)))
+        except ValueError:
+            continue
+
+    counts = {}
+    for value in observed:
+        counts[value] = counts.get(value, 0) + 1
+    exit_ip, confirmations = max(counts.items(), key=lambda item: item[1]) if counts else (None, 0)
+    return exit_ip, confirmations, sorted(set(observed))
+
 
 def test_single_node_xray(node_tuple):
     raw_node, server, port, proto = node_tuple
@@ -508,29 +553,13 @@ def test_single_node_xray(node_tuple):
             "http": f"socks5h://127.0.0.1:{socks_port}",
             "https": f"socks5h://127.0.0.1:{socks_port}"
         }
-        resp = requests.get("https://www.google.com/generate_204", proxies=proxies, timeout=6.5)
+        session = requests.Session()
+        resp = session.get("https://www.google.com/generate_204", proxies=proxies, timeout=6.5)
         if resp.status_code in [200, 204]:
             delay_ms = int((time.time() - start_t) * 1000)
             if 30 < delay_ms < 6300:
-                # 严格通过代理穿透向公网 API 获取真实出网 IP
-                for check_url in ["https://api.ipify.org?format=json", "https://ip.seeip.org/json"]:
-                    try:
-                        ip_resp = requests.get(check_url, proxies=proxies, timeout=3.0)
-                        if ip_resp.status_code == 200:
-                            fetched = ip_resp.json().get("ip")
-                            if fetched:
-                                exit_ip = fetched
-                                is_confirmed_exit = True
-                                break
-                    except Exception:
-                        pass
-                
-                # 若无法穿透拿到落地 IP，仅以普通可用出库，绝不打上真出口标签
-                if not exit_ip:
-                    try:
-                        exit_ip = socket.gethostbyname(server)
-                    except Exception:
-                        exit_ip = server
+                exit_ip, confirmations, observed_ips = confirm_proxy_exit_ip(session, proxies)
+                is_confirmed_exit = confirmations >= 2
                 success = True
     except Exception:
         success = False
@@ -543,8 +572,8 @@ def test_single_node_xray(node_tuple):
         except Exception:
             pass
 
-    if success and exit_ip:
-        return (raw_node, server, port, proto, exit_ip, delay_ms, is_confirmed_exit)
+    if success:
+        return (raw_node, server, port, proto, exit_ip, delay_ms, is_confirmed_exit, observed_ips if 'observed_ips' in locals() else [])
     return None
 
 def run_real_delay_test_xray(candidates):
@@ -585,20 +614,38 @@ def get_rdns_host(ip):
     except Exception:
         return ""
 
-def is_verified_residential_offline(ip, org_str, asn):
-    if asn in TRUE_RESIDENTIAL_ASNS:
-        return True
+def residential_score(ip, org_str, asn, exit_confirmed):
+    """Return a conservative residential confidence score and its evidence."""
+    evidence = []
+    if not exit_confirmed:
+        return 0, ["egress_ip_not_confirmed"]
+    if is_cloudflare_cdn_ip(ip):
+        return 0, ["cloudflare_egress"]
 
     info = f"{org_str} {get_rdns_host(ip)}".lower()
-    for kw in IDC_KEYWORDS:
-        if kw in info:
-            return False
-            
-    for r_kw in RESIDENTIAL_WHITELIST_KEYWORDS:
-        if r_kw in info:
-            return True
+    if asn in DATACENTER_ASNS:
+        return 0, ["datacenter_asn"]
+    if any(keyword in info for keyword in IDC_KEYWORDS):
+        return 0, ["datacenter_keyword"]
 
-    return False
+    score = 35  # verified, non-CDN egress IP
+    evidence.append("confirmed_egress")
+    if asn in TRUE_RESIDENTIAL_ASNS:
+        score += 45
+        evidence.append("residential_asn")
+    matched_keywords = [keyword for keyword in RESIDENTIAL_WHITELIST_KEYWORDS if keyword in info]
+    if matched_keywords:
+        score += min(30, 15 * len(matched_keywords))
+        evidence.append("isp_keyword:" + ",".join(matched_keywords[:2]))
+    if get_rdns_host(ip):
+        score += 5
+        evidence.append("rdns_present")
+    return min(score, 100), evidence
+
+
+def quality_score(delay, exit_confirmed, residential_confidence):
+    latency_score = max(0, 45 - int(delay / 120))
+    return latency_score + (35 if exit_confirmed else 0) + min(20, residential_confidence // 5)
 
 def classify_and_filter(alive_nodes):
     country_reader = maxminddb.open_database("Country.mmdb")
@@ -606,32 +653,24 @@ def classify_and_filter(alive_nodes):
     verified = []
 
     def classify_item(item):
-        raw_node, server, port, proto, exit_ip, delay, is_confirmed_exit = item
+        raw_node, server, port, proto, exit_ip, delay, is_confirmed_exit, observed_ips = item
 
-        country_code = "OTHER"
-        try:
-            c = country_reader.get(exit_ip)
-            if c and "country" in c:
-                code = c["country"]["iso_code"]
-                if code not in ["T1", "A1", "A2", "OTHER"]:
-                    country_code = code.upper()
-        except Exception:
-            pass
-
-        # 核心拦截：如果未拿到经代理穿透的真实出网 IP，或命中 Cloudflare CDN，一票否决家宽属性
-        if not is_confirmed_exit or is_cloudflare_cdn_ip(exit_ip):
-            is_residential = False
-        else:
-            is_residential = False
+        country_code, asn, org = "OTHER", 0, ""
+        if is_confirmed_exit and exit_ip:
             try:
+                c = country_reader.get(exit_ip)
+                if c and c.get("country", {}).get("iso_code"):
+                    code = c["country"]["iso_code"].upper()
+                    if code not in ["T1", "A1", "A2", "OTHER"]:
+                        country_code = code
                 a = asn_reader.get(exit_ip)
                 asn = a.get("autonomous_system_number", 0) if a else 0
-                org = str(a.get("autonomous_system_organization", "")).lower() if a else ""
-                
-                if asn not in DATACENTER_ASNS:
-                    is_residential = is_verified_residential_offline(exit_ip, org, asn)
+                org = str(a.get("autonomous_system_organization", "")) if a else ""
             except Exception:
                 pass
+
+        res_score, residential_evidence = residential_score(exit_ip, org, asn, is_confirmed_exit) if exit_ip else (0, ["missing_egress_ip"])
+        is_residential = res_score >= 80
 
         c_dict = convert_to_clash_dict(raw_node, "temp")
         if not c_dict:
@@ -642,10 +681,17 @@ def classify_and_filter(alive_nodes):
             "clash_proxy": c_dict,
             "country": str(country_code).upper(),
             "is_residential": is_residential,
+            "residential_confidence": res_score,
+            "residential_evidence": residential_evidence,
             "exit_ip": exit_ip,
+            "exit_ip_confirmed": is_confirmed_exit,
+            "observed_exit_ips": observed_ips,
+            "asn": asn,
+            "organization": org,
             "port": port,
             "proto": proto,
-            "delay": delay
+            "delay": delay,
+            "quality_score": quality_score(delay, is_confirmed_exit, res_score)
         }
 
     print("[*] 正在解析真实出口国家并鉴定住宅属性...")
@@ -678,7 +724,9 @@ def classify_and_filter(alive_nodes):
                     seen_res_ips.add(item["exit_ip"])
             unique_all.append(item)
 
-    print(f"[*] 智能去重与家宽防刷完成，出库总节点: {len(unique_all)} 个，纯净独立家宽: {len(seen_res_ips)} 个")
+    # Country feeds must contain only nodes whose egress IP was independently confirmed.
+    unique_all.sort(key=lambda node: (-node["quality_score"], node["delay"]))
+    print(f"[*] 智能去重与家宽防刷完成，出库总节点: {len(unique_all)} 个，高置信住宅: {len(seen_res_ips)} 个")
     return unique_all
 
 def export_clash_yaml(clash_proxies, filepath):
@@ -736,10 +784,13 @@ def format_node_group(nodes_list, res_tag_force=False):
 def export_subscriptions(verified_nodes):
     ensure_directories()
     residential_nodes = [n for n in verified_nodes if n["is_residential"]]
-    non_residential_nodes = [n for n in verified_nodes if not n["is_residential"]]
+    # Regional feeds only contain a confirmed proxy egress. Nodes without that
+    # evidence remain visible in metadata but never get a misleading country tag.
+    confirmed_nodes = [n for n in verified_nodes if n["exit_ip_confirmed"] and n["country"] != "OTHER"]
+    non_residential_nodes = [n for n in confirmed_nodes if not n["is_residential"]]
 
     # 1. 导出全量总订阅
-    all_links, all_proxies = format_node_group(verified_nodes)
+    all_links, all_proxies = format_node_group(confirmed_nodes)
     with open(os.path.join(OUTPUT_DIR, "v2ray.txt"), "w", encoding="utf-8") as f:
         f.write(base64.b64encode("\n".join(all_links).encode()).decode())
     export_clash_yaml(all_proxies, os.path.join(OUTPUT_DIR, "clash.yaml"))
@@ -765,6 +816,7 @@ def export_subscriptions(verified_nodes):
         by_cc.setdefault(n["country"], []).append(n)
 
     for cc, n_list in by_cc.items():
+        n_list = sorted(n_list, key=lambda node: (-node["quality_score"], node["delay"]))[:MAX_NODES_PER_COUNTRY]
         c_links, c_proxies = format_node_group(n_list)
         with open(os.path.join(COUNTRY_DIR, f"{cc}.txt"), "w", encoding="utf-8") as f:
             f.write(base64.b64encode("\n".join(c_links).encode()).decode())
@@ -779,14 +831,53 @@ def export_subscriptions(verified_nodes):
         res_by_cc.setdefault(n["country"], []).append(n)
 
     for cc, n_list in res_by_cc.items():
+        n_list = sorted(n_list, key=lambda node: (-node["quality_score"], node["delay"]))[:MAX_RESIDENTIAL_NODES_PER_COUNTRY]
         cr_links, cr_proxies = format_node_group(n_list, res_tag_force=True)
         with open(os.path.join(RESIDENTIAL_COUNTRY_DIR, f"{cc}.txt"), "w", encoding="utf-8") as f:
             f.write(base64.b64encode("\n".join(cr_links).encode()).decode())
         export_clash_yaml(cr_proxies, os.path.join(RESIDENTIAL_COUNTRY_DIR, f"clash-{cc}.yaml"))
         export_singbox_json(cr_proxies, os.path.join(RESIDENTIAL_COUNTRY_DIR, f"singbox-{cc}.json"))
 
-    print(f"[*] 导出完毕！全量真活: {len(all_links)} | 家宽真活: {len(res_links)}")
+    export_metadata(verified_nodes, confirmed_nodes)
+    print(f"[*] 导出完毕！全量真活: {len(all_links)} | 已确认地区节点: {len(confirmed_nodes)} | 高置信住宅: {len(res_links)}")
     return len(all_links), len(res_links)
+
+
+def export_metadata(verified_nodes, confirmed_nodes):
+    """Persist explanation data so classification complaints are reproducible."""
+    ensure_directories()
+    safe_nodes = []
+    for node in verified_nodes:
+        safe_nodes.append({
+            "id": hashlib.sha256(node["link"].split("#")[0].encode()).hexdigest()[:16],
+            "protocol": node["proto"],
+            "server": node["clash_proxy"].get("server"),
+            "port": node["port"],
+            "exit_ip": node["exit_ip"],
+            "exit_ip_confirmed": node["exit_ip_confirmed"],
+            "observed_exit_ips": node["observed_exit_ips"],
+            "country": node["country"],
+            "asn": node["asn"],
+            "organization": node["organization"],
+            "latency_ms": node["delay"],
+            "quality_score": node["quality_score"],
+            "residential": node["is_residential"],
+            "residential_confidence": node["residential_confidence"],
+            "residential_evidence": node["residential_evidence"],
+        })
+    summary = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "alive_nodes": len(verified_nodes),
+        "confirmed_egress_nodes": len(confirmed_nodes),
+        "high_confidence_residential_nodes": sum(1 for node in verified_nodes if node["is_residential"]),
+        "unconfirmed_egress_nodes": sum(1 for node in verified_nodes if not node["exit_ip_confirmed"]),
+        "country_cap": MAX_NODES_PER_COUNTRY,
+        "residential_country_cap": MAX_RESIDENTIAL_NODES_PER_COUNTRY,
+    }
+    with open(os.path.join(METADATA_DIR, "nodes.json"), "w", encoding="utf-8") as handle:
+        json.dump(safe_nodes, handle, ensure_ascii=False, indent=2)
+    with open(os.path.join(METADATA_DIR, "summary.json"), "w", encoding="utf-8") as handle:
+        json.dump(summary, handle, ensure_ascii=False, indent=2)
 
 def update_readme():
     repo_name = os.environ.get("GITHUB_REPOSITORY", "hezhanleiok/freesub").strip()
@@ -919,8 +1010,8 @@ export default {
 
 ---
 
-## 🏠 按照家宽分类节点订阅 (住宅 IP 专区)
-> 经 MaxMind ASN 数据库与核心运营商白名单严格探测，排除所有云主机/数据中心及 CDN 任播，保留真实民用宽带。
+## 🏠 高置信住宅出口订阅
+> 仅收录经多出口回显服务一致确认、排除 CDN/数据中心后，且住宅评分达到阈值的节点。判定证据会写入 output/metadata/nodes.json。
 
 | 家宽地区 | 节点数 | V2RayN 专属订阅 | Clash 专属订阅 | sing-box 专属订阅 |
 | :--- | :---: | :---: | :---: | :---: |
@@ -928,7 +1019,8 @@ export default {
 
 ---
 
-## 🗺️ 按照国家分类节点订阅 (非家宽/数据中心节点)
+## 🗺️ 按真实出口国家分类节点订阅
+> 未获得多源一致出口 IP 的节点不会进入任何国家专属订阅，避免服务器地址、中转地址与真实落地地址混用。
 
 | 地区/国家 | 节点数 | V2RayN 专属订阅 | Clash 专属订阅 | sing-box 专属订阅 |
 | :--- | :---: | :---: | :---: | :---: |

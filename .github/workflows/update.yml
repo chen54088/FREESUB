@@ -1,5 +1,9 @@
 name: Update Subscriptions
 
+concurrency:
+  group: subscription-update
+  cancel-in-progress: false
+
 on:
   schedule:
     # 每天在 UTC 时间 0:00, 6:00, 12:00, 18:00 自动触发更新
@@ -9,6 +13,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     permissions:
       contents: write
 
@@ -29,6 +34,11 @@ jobs:
       - name: Run Real-Prober and Classifier
         run: |
           python scripts/main.py
+
+      - name: Validate Generated Outputs
+        run: |
+          python -m py_compile scripts/main.py scripts/validate_outputs.py
+          python scripts/validate_outputs.py
 
       - name: Commit and Push Results
         run: |
