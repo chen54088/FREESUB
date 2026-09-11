@@ -16,7 +16,7 @@ proxies:
   ws-opts:
     path: /
     headers:
-      Host: 45.144.28.39
+      Host: usejh2.neobo-tooth.ru
 - name: 🇫🇷 法国 (France) 02 - Cicada_YH
   type: vless
   server: 45.144.28.39
@@ -29,7 +29,7 @@ proxies:
   ws-opts:
     path: /
     headers:
-      Host: usejh2.neobo-tooth.ru
+      Host: 45.144.28.39
 - name: 🇫🇷 法国 (France) 03 - Cicada_YH
   type: vless
   server: 45.144.28.39
@@ -44,18 +44,12 @@ proxies:
     headers:
       Host: 45.144.28.39
 - name: 🇫🇷 法国 (France) 04 - Cicada_YH
-  type: vless
-  server: 45.144.28.39
-  port: 2096
-  uuid: 70e20b2e-3b1f-4c25-9a3d-9240570391bb
+  type: ss
+  server: 51.255.13.232
+  port: 8388
+  cipher: chacha20-ietf-poly1305
+  password: BqnqToih0PbU
   udp: true
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 45.144.28.39
 - name: 🇫🇷 法国 (France) 05 - Cicada_YH
   type: ss
   server: 51.255.13.232
@@ -65,10 +59,10 @@ proxies:
   udp: true
 - name: 🇫🇷 法国 (France) 06 - Cicada_YH
   type: ss
-  server: 51.255.13.232
+  server: 51.83.192.80
   port: 8388
-  cipher: chacha20-ietf-poly1305
-  password: BqnqToih0PbU
+  cipher: aes-256-gcm
+  password: itzvpn@321
   udp: true
 - name: 🇫🇷 法国 (France) 07 - Cicada_YH
   type: ss
@@ -78,13 +72,6 @@ proxies:
   password: itzvpn@321
   udp: true
 - name: 🇫🇷 法国 (France) 08 - Cicada_YH
-  type: ss
-  server: 51.83.192.80
-  port: 8388
-  cipher: aes-256-gcm
-  password: itzvpn@321
-  udp: true
-- name: 🇫🇷 法国 (France) 09 - Cicada_YH
   type: vless
   server: 152.228.162.19
   port: 80
@@ -97,30 +84,18 @@ proxies:
     path: /vless/
     headers:
       Host: akamaized.net
-- name: 🇫🇷 法国 (France) 10 - Cicada_YH
+- name: 🇫🇷 法国 (France) 09 - Cicada_YH
   type: vless
-  server: 51.77.217.70
-  port: 2053
-  uuid: c543f005-59f7-40c1-9ae6-37505691d5be
+  server: 51.38.82.1
+  port: 443
+  uuid: 9343f183-7a16-4bdd-9c65-b0c21feca40b
   udp: true
   tls: true
   skip-cert-verify: true
   reality-opts:
-    public-key: UKvonm_uE7TSwksQIVQuNYgYwmcidr_g4lDIE2JW_Ag
-  servername: www.google.com
+    public-key: YRKpNLfduSsOl3l-CCUkhZDEjvcKytnuELqnWjLZI1M
+  servername: play.google.com
   client-fingerprint: chrome
-- name: 🇫🇷 法国 (France) 11 - Cicada_YH
-  type: vless
-  server: 54.37.136.194
-  port: 2053
-  uuid: 2211972b-a45a-4951-a640-6173d573e637
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  reality-opts:
-    public-key: 3nFTPdoFnfcwN1xnLwegJmBycLqRH6TRsrbD2XnQbjM
-  servername: www.cloudflare.com
-  client-fingerprint: random
 proxy-groups:
 - name: PROXIES
   type: select
@@ -135,8 +110,6 @@ proxy-groups:
   - 🇫🇷 法国 (France) 07 - Cicada_YH
   - 🇫🇷 法国 (France) 08 - Cicada_YH
   - 🇫🇷 法国 (France) 09 - Cicada_YH
-  - 🇫🇷 法国 (France) 10 - Cicada_YH
-  - 🇫🇷 法国 (France) 11 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -151,7 +124,5 @@ proxy-groups:
   - 🇫🇷 法国 (France) 07 - Cicada_YH
   - 🇫🇷 法国 (France) 08 - Cicada_YH
   - 🇫🇷 法国 (France) 09 - Cicada_YH
-  - 🇫🇷 法国 (France) 10 - Cicada_YH
-  - 🇫🇷 法国 (France) 11 - Cicada_YH
 rules:
 - MATCH,PROXIES

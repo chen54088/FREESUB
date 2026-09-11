@@ -21,15 +21,12 @@ proxies:
   sni: 154.90.62.70
   skip-cert-verify: true
 - name: 🇰🇷 韩国 (South Korea) 03 - Cicada_YH
-  type: vmess
-  server: 140.238.2.250
-  port: 443
-  uuid: 41a7089a-040b-4538-8b8d-010902405bde
-  alterId: 0
-  cipher: auto
+  type: ss
+  server: 141.164.45.187
+  port: 8888
+  cipher: aes-256-gcm
+  password: Y6R9pAtvxxzmGC
   udp: true
-  tls: false
-  skip-cert-verify: true
 - name: 🇰🇷 韩国 (South Korea) 04 - Cicada_YH
   type: vmess
   server: 140.238.2.250
@@ -43,30 +40,87 @@ proxies:
 - name: 🇰🇷 韩国 (South Korea) 05 - Cicada_YH
   type: ss
   server: 141.164.45.187
-  port: 7002
+  port: 7001
   cipher: aes-256-gcm
   password: RexnBgU7EV5ADxG
   udp: true
 - name: 🇰🇷 韩国 (South Korea) 06 - Cicada_YH
+  type: vmess
+  server: 132.145.80.230
+  port: 80
+  uuid: 5155860e-d07d-46c3-9128-3afbd84626c7
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /cctv13.m3u8
+    headers:
+      Host: ''
+- name: 🇰🇷 韩国 (South Korea) 07 - Cicada_YH
+  type: ss
+  server: 141.164.45.187
+  port: 7002
+  cipher: aes-256-gcm
+  password: RexnBgU7EV5ADxG
+  udp: true
+- name: 🇰🇷 韩国 (South Korea) 08 - Cicada_YH
+  type: ss
+  server: 141.164.45.187
+  port: 5001
+  cipher: aes-256-gcm
+  password: Y6R9pAtvxxzmGC
+  udp: true
+- name: 🇰🇷 韩国 (South Korea) 09 - Cicada_YH
+  type: ss
+  server: 141.164.45.187
+  port: 2376
+  cipher: aes-256-gcm
+  password: faBAoD54k87UJG7
+  udp: true
+- name: 🇰🇷 韩国 (South Korea) 10 - Cicada_YH
   type: ss
   server: 141.164.45.187
   port: 6697
   cipher: aes-256-gcm
   password: TEzjfAYq2IjtuoS
   udp: true
-- name: 🇰🇷 韩国 (South Korea) 07 - Cicada_YH
+- name: 🇰🇷 韩国 (South Korea) 11 - Cicada_YH
   type: ss
   server: 141.164.45.187
   port: 5498
   cipher: aes-256-gcm
   password: lGqs95QkFHo2NV
   udp: true
-- name: 🇰🇷 韩国 (South Korea) 08 - Cicada_YH
+- name: 🇰🇷 韩国 (South Korea) 12 - Cicada_YH
   type: ss
   server: 141.164.45.187
   port: 9101
   cipher: aes-256-gcm
   password: e4FCWrgpkji3QY
+  udp: true
+- name: 🇰🇷 韩国 (South Korea) 13 - Cicada_YH
+  type: ss
+  server: 141.164.45.187
+  port: 9090
+  cipher: aes-256-gcm
+  password: Y6R9pAtvxxzmGC
+  udp: true
+- name: 🇰🇷 韩国 (South Korea) 14 - Cicada_YH
+  type: ss
+  server: 141.164.45.187
+  port: 8008
+  cipher: aes-256-gcm
+  password: XKFKl2rULjIp74
+  udp: true
+- name: 🇰🇷 韩国 (South Korea) 15 - Cicada_YH
+  type: ss
+  server: 141.164.45.187
+  port: 5498
+  cipher: aes-256-gcm
+  password: lGqs95QkFHo2NV
   udp: true
 proxy-groups:
 - name: PROXIES
@@ -81,6 +135,13 @@ proxy-groups:
   - 🇰🇷 韩国 (South Korea) 06 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 07 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 08 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 09 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 10 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 11 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 12 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 13 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 14 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 15 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -94,5 +155,12 @@ proxy-groups:
   - 🇰🇷 韩国 (South Korea) 06 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 07 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 08 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 09 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 10 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 11 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 12 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 13 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 14 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 15 - Cicada_YH
 rules:
 - MATCH,PROXIES
