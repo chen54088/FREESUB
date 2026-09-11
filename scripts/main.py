@@ -35,6 +35,7 @@ SOURCE_URLS = [
 OUTPUT_DIR = "output"
 COUNTRY_DIR = os.path.join(OUTPUT_DIR, "by-country")
 RESIDENTIAL_COUNTRY_DIR = os.path.join(OUTPUT_DIR, "residential-by-country")
+RESIDENTIAL_RELAXED_DIR = os.path.join(OUTPUT_DIR, "residential-relaxed-by-country")
 METADATA_DIR = os.path.join(OUTPUT_DIR, "metadata")
 
 # A node is allowed into a country or residential feed only after at least two
@@ -46,11 +47,14 @@ EXIT_IP_CHECKS = (
 )
 MAX_NODES_PER_COUNTRY = 20
 MAX_RESIDENTIAL_NODES_PER_COUNTRY = 10
+MIN_HIGH_RESIDENTIAL_SCORE = 80
+MIN_RELAXED_RESIDENTIAL_SCORE = 65
 
 def ensure_directories():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     os.makedirs(COUNTRY_DIR, exist_ok=True)
     os.makedirs(RESIDENTIAL_COUNTRY_DIR, exist_ok=True)
+    os.makedirs(RESIDENTIAL_RELAXED_DIR, exist_ok=True)
     os.makedirs(METADATA_DIR, exist_ok=True)
 
 ensure_directories()
@@ -111,7 +115,14 @@ TRUE_RESIDENTIAL_ASNS = {
     9269, 3491, 4760, 9304, 17816,
     2516, 4713, 9605, 17511, 17676,
     9318, 4766,
-    701, 702, 7922, 20115, 2856, 5089, 5607, 3320, 3209
+    701, 702, 7922, 20115, 2856, 5089, 5607, 3320, 3209,
+    # Europe
+    3215, 12322, 5410, 3352, 12479, 3269, 12874, 1221, 4804,
+    577, 812, 8151, 18881, 28573, 4771, 9500,
+    # Asia-Pacific
+    9506, 4657, 4788, 17552, 4618, 9498, 55836, 4766, 9318,
+    # Additional fixed/mobile consumer access networks
+    3320, 6805, 6830, 3265, 3216, 12576, 15557, 20940
 }
 
 RESIDENTIAL_WHITELIST_KEYWORDS = [
@@ -123,6 +134,12 @@ RESIDENTIAL_WHITELIST_KEYWORDS = [
     "so-net", "kddi", "softbank", "ocn", "plala", "sk broadband", "korea telecom",
     "comcast", "charter", "at&t", "verizon", "spectrum", "cox", "vodafone",
     "deutsche telekom", "telekom", "orange", "bt-central", "virgin media"
+    ,"free mobile", "bouygues", "sfr", "telefonica", "movistar",
+    "telecom italia", "fastweb", "telstra", "optus", "spark new zealand",
+    "singtel", "starhub", "tmnet", "true internet", "ais", "airtel",
+    "jio", "bell canada", "rogers", "telmex", "vivo", "claro",
+    "telenor", "telia", "elisa", "swisscom", "a1 telekom",
+    "proximus", "ziggo", "t-mobile", "telefonica deutschland"
 ]
 
 COUNTRY_NAMES = {
@@ -670,7 +687,9 @@ def classify_and_filter(alive_nodes):
                 pass
 
         res_score, residential_evidence = residential_score(exit_ip, org, asn, is_confirmed_exit) if exit_ip else (0, ["missing_egress_ip"])
-        is_residential = res_score >= 80
+        is_residential = res_score >= MIN_HIGH_RESIDENTIAL_SCORE
+        is_relaxed_residential = res_score >= MIN_RELAXED_RESIDENTIAL_SCORE
+        residential_tier = "A" if is_residential else ("B" if is_relaxed_residential else "C")
 
         c_dict = convert_to_clash_dict(raw_node, "temp")
         if not c_dict:
@@ -681,6 +700,8 @@ def classify_and_filter(alive_nodes):
             "clash_proxy": c_dict,
             "country": str(country_code).upper(),
             "is_residential": is_residential,
+            "is_relaxed_residential": is_relaxed_residential,
+            "residential_tier": residential_tier,
             "residential_confidence": res_score,
             "residential_evidence": residential_evidence,
             "exit_ip": exit_ip,
@@ -717,9 +738,11 @@ def classify_and_filter(alive_nodes):
             seen_all.add(all_key)
             
             # 若标记为家宽，但该物理出口 IP 已存在，直接降级为普通节点，绝不重复生成
-            if item["is_residential"]:
+            if item["is_relaxed_residential"]:
                 if item["exit_ip"] in seen_res_ips:
                     item["is_residential"] = False
+                    item["is_relaxed_residential"] = False
+                    item["residential_tier"] = "C"
                 else:
                     seen_res_ips.add(item["exit_ip"])
             unique_all.append(item)
@@ -784,6 +807,7 @@ def format_node_group(nodes_list, res_tag_force=False):
 def export_subscriptions(verified_nodes):
     ensure_directories()
     residential_nodes = [n for n in verified_nodes if n["is_residential"]]
+    relaxed_residential_nodes = [n for n in verified_nodes if n.get("is_relaxed_residential", False)]
     # Regional feeds only contain a confirmed proxy egress. Nodes without that
     # evidence remain visible in metadata but never get a misleading country tag.
     confirmed_nodes = [n for n in verified_nodes if n["exit_ip_confirmed"] and n["country"] != "OTHER"]
@@ -807,6 +831,20 @@ def export_subscriptions(verified_nodes):
         for f in ["residential-clash.yaml", "residential-singbox.json"]:
             p = os.path.join(OUTPUT_DIR, f)
             if os.path.exists(p): os.remove(p)
+
+    # 2b. 宽松住宅池：保留 A/B 两级，严格池仍只保留 A 级
+    shutil.rmtree(RESIDENTIAL_RELAXED_DIR, ignore_errors=True)
+    os.makedirs(RESIDENTIAL_RELAXED_DIR, exist_ok=True)
+    relaxed_by_cc = {}
+    for n in relaxed_residential_nodes:
+        relaxed_by_cc.setdefault(n["country"], []).append(n)
+    for cc, n_list in relaxed_by_cc.items():
+        n_list = sorted(n_list, key=lambda node: (-node["quality_score"], -node["residential_confidence"], node["delay"]))[:MAX_RESIDENTIAL_NODES_PER_COUNTRY]
+        links, proxies = format_node_group(n_list, res_tag_force=True)
+        with open(os.path.join(RESIDENTIAL_RELAXED_DIR, f"{cc}.txt"), "w", encoding="utf-8") as f:
+            f.write(base64.b64encode("\n".join(links).encode()).decode())
+        export_clash_yaml(proxies, os.path.join(RESIDENTIAL_RELAXED_DIR, f"clash-{cc}.yaml"))
+        export_singbox_json(proxies, os.path.join(RESIDENTIAL_RELAXED_DIR, f"singbox-{cc}.json"))
 
     # 3. 按国家分类【非家宽/机房】
     shutil.rmtree(COUNTRY_DIR, ignore_errors=True)
@@ -839,7 +877,7 @@ def export_subscriptions(verified_nodes):
         export_singbox_json(cr_proxies, os.path.join(RESIDENTIAL_COUNTRY_DIR, f"singbox-{cc}.json"))
 
     export_metadata(verified_nodes, confirmed_nodes)
-    print(f"[*] 导出完毕！全量真活: {len(all_links)} | 已确认地区节点: {len(confirmed_nodes)} | 高置信住宅: {len(res_links)}")
+    print(f"[*] 导出完毕！全量真活: {len(all_links)} | 已确认地区节点: {len(confirmed_nodes)} | 高置信住宅A: {len(res_links)} | 宽松住宅A/B: {len(relaxed_residential_nodes)}")
     return len(all_links), len(res_links)
 
 
@@ -862,6 +900,8 @@ def export_metadata(verified_nodes, confirmed_nodes):
             "latency_ms": node["delay"],
             "quality_score": node["quality_score"],
             "residential": node["is_residential"],
+            "residential_relaxed": node.get("is_relaxed_residential", False),
+            "residential_tier": node.get("residential_tier", "C"),
             "residential_confidence": node["residential_confidence"],
             "residential_evidence": node["residential_evidence"],
         })
@@ -870,6 +910,12 @@ def export_metadata(verified_nodes, confirmed_nodes):
         "alive_nodes": len(verified_nodes),
         "confirmed_egress_nodes": len(confirmed_nodes),
         "high_confidence_residential_nodes": sum(1 for node in verified_nodes if node["is_residential"]),
+        "relaxed_residential_nodes": sum(1 for node in verified_nodes if node.get("is_relaxed_residential", False)),
+        "residential_tiers": {
+            "A": sum(1 for node in verified_nodes if node.get("residential_tier") == "A"),
+            "B": sum(1 for node in verified_nodes if node.get("residential_tier") == "B"),
+            "C": sum(1 for node in verified_nodes if node.get("residential_tier") == "C"),
+        },
         "unconfirmed_egress_nodes": sum(1 for node in verified_nodes if not node["exit_ip_confirmed"]),
         "country_cap": MAX_NODES_PER_COUNTRY,
         "residential_country_cap": MAX_RESIDENTIAL_NODES_PER_COUNTRY,
@@ -908,6 +954,15 @@ def update_readme():
                 if cnt > 0:
                     res_counts[cc] = cnt
 
+    relaxed_counts = {}
+    if os.path.exists(RESIDENTIAL_RELAXED_DIR):
+        for fn in os.listdir(RESIDENTIAL_RELAXED_DIR):
+            if fn.endswith(".txt"):
+                cc = fn[:-4]
+                cnt = count_file(os.path.join(RESIDENTIAL_RELAXED_DIR, fn))
+                if cnt > 0:
+                    relaxed_counts[cc] = cnt
+
     normal_counts = {}
     if os.path.exists(COUNTRY_DIR):
         for fn in os.listdir(COUNTRY_DIR):
@@ -941,6 +996,20 @@ def update_readme():
         col_sb = f"[CDN 直链]({sb_cdn}) · [Raw 直链]({sb_raw})"
         res_rows.append(f"| {flag} {name} | {cnt} | {col_v2} | {col_clash} | {col_sb} |")
     res_table_str = "\n".join(res_rows) if res_rows else "| 暂无可用家宽节点 | 0 | - | - | - |"
+
+    relaxed_rows = []
+    for cc in sorted(relaxed_counts.keys(), key=lambda x: relaxed_counts[x], reverse=True):
+        flag = get_country_flag(cc)
+        name = COUNTRY_NAMES.get(cc, cc)
+        cnt = relaxed_counts[cc]
+        base = f"https://cdn.jsdelivr.net/gh/{repo_name}@main/output/residential-relaxed-by-country/"
+        raw = f"https://raw.githubusercontent.com/{repo_name}/main/output/residential-relaxed-by-country/"
+        relaxed_rows.append(
+            f"| {flag} {name} | {cnt} | [V2RayN]({base}{cc}.txt?v={cache_bust}) · [Raw]({raw}{cc}.txt) | "
+            f"[Clash]({base}clash-{cc}.yaml?v={cache_bust}) · [Raw]({raw}clash-{cc}.yaml) | "
+            f"[sing-box]({base}singbox-{cc}.json?v={cache_bust}) · [Raw]({raw}singbox-{cc}.json) |"
+        )
+    relaxed_table_str = "\n".join(relaxed_rows) if relaxed_rows else "| 暂无 B 级补充住宅节点 | 0 | - | - | - |"
 
     normal_rows = []
     for cc in sorted(normal_counts.keys(), key=lambda x: normal_counts[x], reverse=True):
@@ -1011,11 +1080,18 @@ export default {
 ---
 
 ## 🏠 高置信住宅出口订阅
-> 仅收录经多出口回显服务一致确认、排除 CDN/数据中心后，且住宅评分达到阈值的节点。判定证据会写入 output/metadata/nodes.json。
+> 仅收录经多出口回显服务一致确认、排除 CDN/数据中心后，且住宅评分达到 A 级阈值的节点。判定证据会写入 output/metadata/nodes.json。
 
 | 家宽地区 | 节点数 | V2RayN 专属订阅 | Clash 专属订阅 | sing-box 专属订阅 |
 | :--- | :---: | :---: | :---: | :---: |
 {res_table_str}
+
+## 🏡 扩展住宅订阅（A/B 级）
+> 在不污染高置信专区的前提下，额外收录住宅评分 65～79 的 B 级节点，用于扩展国家覆盖。使用前可查看 `output/metadata/nodes.json` 中的 `residential_tier` 和判定证据。
+
+| 地区/国家 | 节点数 | V2RayN | Clash | sing-box |
+| :--- | :---: | :--- | :--- | :--- |
+{relaxed_table_str}
 
 ---
 
