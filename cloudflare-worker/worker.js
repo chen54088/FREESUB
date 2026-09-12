@@ -16,15 +16,25 @@ function authorized(request, env) {
 }
 export default {
   async fetch(request, env) {
-    if (request.method !== "GET" && request.method !== "HEAD") return new Response("Method Not Allowed", { status: 405 });
-    if (!authorized(request, env)) return new Response("Unauthorized", { status: 401 });
-    const filePath = allowedPath(new URL(request.url).pathname);
-    if (!filePath) return new Response("Not Found", { status: 404 });
-    const owner = env.GITHUB_OWNER || "chen54088", repo = env.GITHUB_REPO || "FREESUB", branch = env.GITHUB_BRANCH || "main";
-    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${encodeURIComponent(branch)}`;
-    const upstream = await fetch(apiUrl, { headers: { Authorization: `Bearer ${env.GITHUB_TOKEN}`, Accept: "application/vnd.github.raw+json", "User-Agent": "freesub-subscription-worker" }});
-    if (!upstream.ok) return new Response("Not Found", { status: upstream.status === 404 ? 404 : 502 });
-    const headers = new Headers({ "Content-Type": filePath.endsWith(".json") ? "application/json; charset=utf-8" : filePath.endsWith(".yaml") ? "text/yaml; charset=utf-8" : "text/plain; charset=utf-8", "Cache-Control": "public, max-age=120, s-maxage=300", "X-Content-Source": "github-private" });
-    return new Response(request.method === "HEAD" ? null : upstream.body, { status: 200, headers });
+    try {
+      const url = new URL(request.url);
+      if (url.pathname === "/") return new Response("freesub gateway ok\n", { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+      if (request.method !== "GET" && request.method !== "HEAD") return new Response("Method Not Allowed", { status: 405 });
+      if (!authorized(request, env)) return new Response("Unauthorized", { status: 401 });
+      if (!env.GITHUB_TOKEN) return new Response("Worker secret GITHUB_TOKEN is missing", { status: 500 });
+      const filePath = allowedPath(url.pathname);
+      if (!filePath) return new Response("Not Found", { status: 404 });
+      const owner = env.GITHUB_OWNER || "chen54088", repo = env.GITHUB_REPO || "FREESUB", branch = env.GITHUB_BRANCH || "main";
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${encodeURIComponent(branch)}`;
+      const upstream = await fetch(apiUrl, { headers: { Authorization: `Bearer ${env.GITHUB_TOKEN}`, Accept: "application/vnd.github+json", "User-Agent": "freesub-subscription-worker" }});
+      if (!upstream.ok) return new Response(`GitHub returned ${upstream.status}`, { status: upstream.status === 404 ? 404 : 502 });
+      const payload = await upstream.json();
+      if (!payload.content) return new Response("GitHub response has no file content", { status: 502 });
+      const binary = Uint8Array.from(atob(payload.content.replace(/\s/g, "")), c => c.charCodeAt(0));
+      const headers = new Headers({ "Content-Type": filePath.endsWith(".json") ? "application/json; charset=utf-8" : filePath.endsWith(".yaml") ? "text/yaml; charset=utf-8" : "text/plain; charset=utf-8", "Cache-Control": "public, max-age=120, s-maxage=300", "X-Content-Source": "github-private" });
+      return new Response(request.method === "HEAD" ? null : binary, { status: 200, headers });
+    } catch (error) {
+      return new Response(`Worker error: ${error instanceof Error ? error.message : String(error)}`, { status: 500 });
+    }
   }
 };
