@@ -2,3 +2,6 @@ Country.mmdb
 ASN.mmdb
 __pycache__/
 *.pyc
+# Local browser and Wrangler state
+.playwright-github/
+cloudflare-worker/.wrangler/
