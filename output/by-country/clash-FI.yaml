@@ -4,31 +4,31 @@ allow-lan: true
 mode: rule
 log-level: info
 proxies:
-- name: 🇰🇷 韩国 (South Korea) 01 (家宽) - Cicada_YH
+- name: 🇫🇮 FI 01 - Cicada_YH
   type: vless
-  server: 172.64.52.230
-  port: 2087
-  uuid: 77777777-8a3e-6666-b6d1-a9c5f0e8b3a2
+  server: a2.arshia-nova.ir
+  port: 443
+  uuid: cc4a473a-2e15-4fc6-ec54-47c3aa5cec09
   udp: true
   tls: true
   skip-cert-verify: true
-  servername: faxf32gkfzoxqv.fx6hsv0.ccwu.cc
+  servername: ssl.fastly.com
   network: ws
   ws-opts:
-    path: /?ed=2560
+    path: /
     headers:
-      Host: faxf32gkfzoxqv.fx6hsv0.ccwu.cc
+      Host: c12.com
 proxy-groups:
 - name: PROXIES
   type: select
   proxies:
   - AUTO
-  - 🇰🇷 韩国 (South Korea) 01 (家宽) - Cicada_YH
+  - 🇫🇮 FI 01 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
   interval: 300
   proxies:
-  - 🇰🇷 韩国 (South Korea) 01 (家宽) - Cicada_YH
+  - 🇫🇮 FI 01 - Cicada_YH
 rules:
 - MATCH,PROXIES

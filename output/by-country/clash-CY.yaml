@@ -15,7 +15,7 @@ proxies:
   reality-opts:
     public-key: MN6QjUHDUXyteMdR-cDna89fq4X3qgQhLnNqTtRUbBQ
   servername: deepl.com
-  client-fingerprint: chrome
+  client-fingerprint: random
 - name: 🇨🇾 CY 02 - Cicada_YH
   type: vless
   server: 194.76.154.31
@@ -27,7 +27,7 @@ proxies:
   reality-opts:
     public-key: MN6QjUHDUXyteMdR-cDna89fq4X3qgQhLnNqTtRUbBQ
   servername: deepl.com
-  client-fingerprint: chrome
+  client-fingerprint: qq
 - name: 🇨🇾 CY 03 - Cicada_YH
   type: vless
   server: 194.76.154.31
@@ -39,44 +39,8 @@ proxies:
   reality-opts:
     public-key: MN6QjUHDUXyteMdR-cDna89fq4X3qgQhLnNqTtRUbBQ
   servername: deepl.com
-  client-fingerprint: random
+  client-fingerprint: chrome
 - name: 🇨🇾 CY 04 - Cicada_YH
-  type: vless
-  server: 194.76.154.31
-  port: 40443
-  uuid: 9f0baff8-bdee-4de9-9515-bcc4932b41fa
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  reality-opts:
-    public-key: MN6QjUHDUXyteMdR-cDna89fq4X3qgQhLnNqTtRUbBQ
-  servername: deepl.com
-  client-fingerprint: qq
-- name: 🇨🇾 CY 05 - Cicada_YH
-  type: vless
-  server: 194.76.154.31
-  port: 40443
-  uuid: 9f0baff8-bdee-4de9-9515-bcc4932b41fa
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  reality-opts:
-    public-key: MN6QjUHDUXyteMdR-cDna89fq4X3qgQhLnNqTtRUbBQ
-  servername: deepl.com
-  client-fingerprint: qq
-- name: 🇨🇾 CY 06 - Cicada_YH
-  type: vless
-  server: 194.76.154.31
-  port: 40443
-  uuid: 9f0baff8-bdee-4de9-9515-bcc4932b41fa
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  reality-opts:
-    public-key: MN6QjUHDUXyteMdR-cDna89fq4X3qgQhLnNqTtRUbBQ
-  servername: deepl.com
-  client-fingerprint: qq
-- name: 🇨🇾 CY 07 - Cicada_YH
   type: vless
   server: 45.9.2.171
   port: 8443
@@ -85,18 +49,6 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: torr.wlrus.cfd
-- name: 🇨🇾 CY 08 - Cicada_YH
-  type: vless
-  server: cassiopeia.yokkastars.com
-  port: 40443
-  uuid: e4371581-c418-4770-b09a-d630f18290a6
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  reality-opts:
-    public-key: WFvn-RRJzpt2qV4xwj_R93gDr6dduIjkQKO3De3Y2Hc
-  servername: deepl.com
-  client-fingerprint: qq
 proxy-groups:
 - name: PROXIES
   type: select
@@ -106,10 +58,6 @@ proxy-groups:
   - 🇨🇾 CY 02 - Cicada_YH
   - 🇨🇾 CY 03 - Cicada_YH
   - 🇨🇾 CY 04 - Cicada_YH
-  - 🇨🇾 CY 05 - Cicada_YH
-  - 🇨🇾 CY 06 - Cicada_YH
-  - 🇨🇾 CY 07 - Cicada_YH
-  - 🇨🇾 CY 08 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -119,9 +67,5 @@ proxy-groups:
   - 🇨🇾 CY 02 - Cicada_YH
   - 🇨🇾 CY 03 - Cicada_YH
   - 🇨🇾 CY 04 - Cicada_YH
-  - 🇨🇾 CY 05 - Cicada_YH
-  - 🇨🇾 CY 06 - Cicada_YH
-  - 🇨🇾 CY 07 - Cicada_YH
-  - 🇨🇾 CY 08 - Cicada_YH
 rules:
 - MATCH,PROXIES
