@@ -32,6 +32,9 @@ jobs:
           pip install -r scripts/requirements.txt
 
       - name: Run Real-Prober and Classifier
+        env:
+          ENHANCED_INTEL_ENABLED: '1'
+          ENHANCED_INTEL_ENFORCE: '0'
         run: |
           python scripts/main.py
 
