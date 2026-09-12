@@ -40,6 +40,12 @@ def main():
             raise ValueError("Country-classified node lacks confirmed egress IP")
         if node.get("residential_relaxed", False) and (not node["exit_ip_confirmed"] or node["country"] == "OTHER"):
             raise ValueError("Relaxed residential node lacks confirmed country egress")
+        intel = node.get("intel") or {}
+        ip_api = intel.get("ip_api") or {}
+        if node.get("residential_relaxed", False) and (ip_api.get("proxy") or ip_api.get("hosting")):
+            raise ValueError("Residential node has ip-api proxy/hosting evidence")
+        if node.get("residential_relaxed", False) and int(intel.get("fraud_score", -1)) >= 90:
+            raise ValueError("Residential node has Scamalytics fraud score >= 90")
         tier = node.get("residential_tier", "C")
         score = int(node.get("residential_confidence", 0))
         if tier == "A" and score < 80:

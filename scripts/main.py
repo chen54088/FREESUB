@@ -50,6 +50,21 @@ MAX_RESIDENTIAL_NODES_PER_COUNTRY = 10
 MIN_HIGH_RESIDENTIAL_SCORE = 80
 MIN_RELAXED_RESIDENTIAL_SCORE = 65
 
+# Author 2.0 intelligence gates. They are queried only for residential
+# candidates, capped per run, and failures fall back to the existing offline
+# ASN/ISP classifier rather than deleting otherwise usable nodes.
+ENHANCED_INTEL_ENABLED = os.environ.get("ENHANCED_INTEL_ENABLED", "1") == "1"
+ENHANCED_INTEL_MAX_IPS = int(os.environ.get("ENHANCED_INTEL_MAX_IPS", "200"))
+IP_INTEL_TIMEOUT = 10
+EXTERNAL_DATACENTER_KEYWORDS = (
+    "zenlayer", "bunny communications", "cloudflare", "akamai",
+    "fastly", "amazon", "google llc", "microsoft",
+    "digitalocean", "vultr", "hetzner", "ovh", "contabo",
+    "leaseweb", "datacamp", "serverius", "clouvider",
+    "m247", "gcore", "choopa", "linode", "alibaba",
+    "tencent cloud", "huawei cloud",
+)
+
 def ensure_directories():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     os.makedirs(COUNTRY_DIR, exist_ok=True)
@@ -664,6 +679,101 @@ def quality_score(delay, exit_confirmed, residential_confidence):
     latency_score = max(0, 45 - int(delay / 120))
     return latency_score + (35 if exit_confirmed else 0) + min(20, residential_confidence // 5)
 
+def _ip_api_lookup(ip):
+    try:
+        r = requests.get(
+            f"http://ip-api.com/json/{ip}?fields=status,query,isp,org,as,asname,proxy,hosting,mobile",
+            timeout=IP_INTEL_TIMEOUT,
+        )
+        if r.ok:
+            data = r.json()
+            return data if data.get("status") == "success" else {}
+    except Exception:
+        pass
+    return {}
+
+def _ipapi_is_lookup(ip):
+    try:
+        r = requests.get(f"https://api.ipapi.is/?q={ip}", timeout=IP_INTEL_TIMEOUT)
+        if r.ok:
+            data = r.json()
+            company = data.get("company") or {}
+            return {"company": company if isinstance(company, str) else json.dumps(company, ensure_ascii=False), "asn": str(data.get("asn") or "")}
+    except Exception:
+        pass
+    return {}
+
+def _scamalytics_score(ip):
+    try:
+        r = requests.get(f"https://scamalytics.com/ip/{ip}", timeout=IP_INTEL_TIMEOUT)
+        if r.ok:
+            match = re.search(r"Fraud Score:\s*(\d+)", r.text)
+            return int(match.group(1)) if match else -1
+    except Exception:
+        pass
+    return -1
+
+def enrich_residential_intel(verified):
+    """Apply author 2.0 intelligence gates without weakening confirmed egress."""
+    if not ENHANCED_INTEL_ENABLED:
+        return
+    candidates = []
+    seen = set()
+    for node in verified:
+        if node.get("residential_confidence", 0) >= MIN_RELAXED_RESIDENTIAL_SCORE and node.get("exit_ip_confirmed") and node.get("exit_ip"):
+            ip = node["exit_ip"]
+            if ip not in seen and len(candidates) < ENHANCED_INTEL_MAX_IPS:
+                seen.add(ip)
+                candidates.append(ip)
+    if not candidates:
+        return
+    print(f"[*] 增强住宅情报: 检查 {len(candidates)} 个出口 IP")
+    def lookup(ip):
+        api = _ip_api_lookup(ip)
+        cross = _ipapi_is_lookup(ip)
+        fraud = _scamalytics_score(ip)
+        return ip, api, cross, fraud
+    intel = {}
+    with ThreadPoolExecutor(max_workers=6) as executor:
+        for future in as_completed([executor.submit(lookup, ip) for ip in candidates]):
+            ip, api, cross, fraud = future.result()
+            intel[ip] = {"ip_api": api, "ipapi_is": cross, "fraud_score": fraud}
+    for node in verified:
+        record = intel.get(node.get("exit_ip"))
+        if not record:
+            continue
+        api, cross, fraud = record["ip_api"], record["ipapi_is"], record["fraud_score"]
+        evidence = node.setdefault("residential_evidence", [])
+        node["intel"] = {"ip_api": api, "ipapi_is": cross, "fraud_score": fraud}
+        if api.get("proxy") or api.get("hosting"):
+            node["residential_confidence"] = 0
+            node["is_residential"] = False
+            node["is_relaxed_residential"] = False
+            node["residential_tier"] = "C"
+            evidence.append("ip_api_proxy_or_hosting")
+            continue
+        intel_text = (str(cross.get("company", "")) + " " + str(cross.get("asn", ""))).lower()
+        matched = [kw for kw in EXTERNAL_DATACENTER_KEYWORDS if kw in intel_text]
+        if matched:
+            node["residential_confidence"] = 0
+            node["is_residential"] = False
+            node["is_relaxed_residential"] = False
+            node["residential_tier"] = "C"
+            evidence.append("ipapi_is_datacenter:" + matched[0])
+            continue
+        if fraud >= 90:
+            node["residential_confidence"] = 0
+            node["is_residential"] = False
+            node["is_relaxed_residential"] = False
+            node["residential_tier"] = "C"
+            evidence.append("scamalytics_fraud_ge_90")
+        elif fraud >= 75:
+            node["is_residential"] = False
+            node["is_relaxed_residential"] = False
+            node["residential_tier"] = "C"
+            evidence.append("scamalytics_fraud_ge_75")
+
+
 def classify_and_filter(alive_nodes):
     country_reader = maxminddb.open_database("Country.mmdb")
     asn_reader = maxminddb.open_database("ASN.mmdb")
@@ -725,6 +835,7 @@ def classify_and_filter(alive_nodes):
 
     country_reader.close()
     asn_reader.close()
+    enrich_residential_intel(verified)
 
     # 关键防线：普通池保留不同配置，家宽专区强制单 IP 严格去重（杜绝 40 个重复高危 IP 刷屏）
     unique_all = []
@@ -912,6 +1023,11 @@ def export_metadata(verified_nodes, confirmed_nodes):
             "residential_tier": node.get("residential_tier", "C"),
             "residential_confidence": node["residential_confidence"],
             "residential_evidence": node["residential_evidence"],
+            "intel": {
+                "ip_api": node.get("intel", {}).get("ip_api", {}),
+                "ipapi_is": node.get("intel", {}).get("ipapi_is", {}),
+                "fraud_score": node.get("intel", {}).get("fraud_score", -1),
+            },
         })
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
