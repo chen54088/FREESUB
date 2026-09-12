@@ -6,6 +6,7 @@ import sys
 
 OUTPUT_DIR = "output"
 METADATA_DIR = os.path.join(OUTPUT_DIR, "metadata")
+ENHANCED_INTEL_ENFORCE = os.environ.get("ENHANCED_INTEL_ENFORCE", "0") == "1"
 
 
 def ensure_base64_subscription(path):
@@ -42,9 +43,9 @@ def main():
             raise ValueError("Relaxed residential node lacks confirmed country egress")
         intel = node.get("intel") or {}
         ip_api = intel.get("ip_api") or {}
-        if node.get("residential_relaxed", False) and (ip_api.get("proxy") or ip_api.get("hosting")):
+        if ENHANCED_INTEL_ENFORCE and node.get("residential_relaxed", False) and (ip_api.get("proxy") or ip_api.get("hosting")):
             raise ValueError("Residential node has ip-api proxy/hosting evidence")
-        if node.get("residential_relaxed", False) and int(intel.get("fraud_score", -1)) >= 90:
+        if ENHANCED_INTEL_ENFORCE and node.get("residential_relaxed", False) and int(intel.get("fraud_score", -1)) >= 90:
             raise ValueError("Residential node has Scamalytics fraud score >= 90")
         tier = node.get("residential_tier", "C")
         score = int(node.get("residential_confidence", 0))

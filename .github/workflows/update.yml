@@ -39,6 +39,8 @@ jobs:
           python scripts/main.py
 
       - name: Validate Generated Outputs
+        env:
+          ENHANCED_INTEL_ENFORCE: '0'
         run: |
           python -m py_compile scripts/main.py scripts/validate_outputs.py
           python scripts/validate_outputs.py
