@@ -5,24 +5,18 @@
   "outbounds": [
     {
       "type": "vless",
-      "tag": "🇨🇿 捷克 (Czech) 01 - xiaohe",
-      "server": "162.159.152.4",
+      "tag": "🇷🇴 罗马尼亚 (Romania) 01 (家宽) - xiaohe",
+      "server": "roma2.moritech.net",
       "server_port": 443,
-      "uuid": "f2a73750-3087-48ff-a763-1348c15dce68",
+      "uuid": "cd3bb7d9-7df3-4644-ac05-c260990ac277",
+      "flow": "xtls-rprx-vision",
       "tls": {
         "enabled": true,
-        "server_name": "rAyAn-007.mAxImA.DpDnS.OrG",
-        "insecure": true,
+        "server_name": "roma2.moritech.net",
+        "insecure": false,
         "utls": {
           "enabled": true,
-          "fingerprint": "chrome"
-        }
-      },
-      "transport": {
-        "type": "ws",
-        "path": "/?ed=2560",
-        "headers": {
-          "Host": "rAyAn-007.mAxImA.DpDnS.OrG"
+          "fingerprint": "edge"
         }
       }
     },
@@ -31,14 +25,14 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "🇨🇿 捷克 (Czech) 01 - xiaohe"
+        "🇷🇴 罗马尼亚 (Romania) 01 (家宽) - xiaohe"
       ]
     },
     {
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "🇨🇿 捷克 (Czech) 01 - xiaohe"
+        "🇷🇴 罗马尼亚 (Romania) 01 (家宽) - xiaohe"
       ],
       "url": "https://www.gstatic.com/generate_204"
     },

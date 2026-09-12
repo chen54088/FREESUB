@@ -5,26 +5,28 @@
   "outbounds": [
     {
       "type": "trojan",
-      "tag": "🇮🇶 IQ 01 - xiaohe",
-      "server": "172.67.156.62",
+      "tag": "🇩🇪 德国 (Germany) 01 (家宽) - xiaohe",
+      "server": "151.101.56.101",
       "server_port": 443,
-      "password": "Telegram_healer_config",
+      "password": "MiTiVPN",
       "tls": {
         "enabled": true,
-        "server_name": "IJM8x9uGWPIQrMN-lo-S.ztl55lTKPUB38y36MCtgm.WOrKeRs.Dev",
+        "server_name": "ssl.fastly.com",
         "insecure": false,
         "alpn": [
           "http/1.1"
-        ]
+        ],
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
       },
       "transport": {
         "type": "ws",
-        "path": "/tr/8g28WHK4FygFkZFa",
+        "path": "@mehrosaboran",
         "headers": {
-          "Host": "IJM8x9uGWPIQrMN-lo-S.ztl55lTKPUB38y36MCtgm.WOrKeRs.Dev"
-        },
-        "max_early_data": 2560,
-        "early_data_header_name": "Sec-WebSocket-Protocol"
+          "Host": "mitivpn---ss--s---mitivpn-5.global.ssl.fastly.net"
+        }
       }
     },
     {
@@ -32,14 +34,14 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "🇮🇶 IQ 01 - xiaohe"
+        "🇩🇪 德国 (Germany) 01 (家宽) - xiaohe"
       ]
     },
     {
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "🇮🇶 IQ 01 - xiaohe"
+        "🇩🇪 德国 (Germany) 01 (家宽) - xiaohe"
       ],
       "url": "https://www.gstatic.com/generate_204"
     },

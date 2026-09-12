@@ -5,33 +5,28 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇺🇸 美国 (United States) 01 (家宽) - xiaohe
-  server: 216.36.124.176
-  port: 29513
+  server: 162.159.0.53
+  port: 8880
   udp: true
   type: vless
-  uuid: f618d6e9-c6af-40b8-bc7a-bbf450586784
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: rSI9mgtOco9D39xdbX64nv2J2BRBGQpgCOi4opw8mCo
-    short-id: 6ba85179e30d4fc2
-  servername: addons.mozilla.org
-  client-fingerprint: random
-- name: 🇹🇼 中国台湾 (Taiwan) 02 (家宽) - xiaohe
-  server: r3mrcg001286ek2.cybervena.com
-  port: 50099
+  uuid: 47fcef29-ab4e-4aa6-932b-d95a18f28a4e
+  network: ws
+  ws-opts:
+    path: /?ed=2560security=tls
+    headers:
+      Host: 8nj2r.2k8t.f88.hh.vavava.kdns.fr
+- name: 🇩🇪 德国 (Germany) 02 (家宽) - xiaohe
+  server: 151.101.56.101
+  port: 443
   udp: true
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+  type: trojan
+  password: MiTiVPN
+  sni: ssl.fastly.com
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: '@mehrosaboran'
 - name: 🇹🇼 中国台湾 (Taiwan) 03 (家宽) - xiaohe
-  server: 36.224.152.189
-  port: 50099
-  udp: true
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
-- name: 🇹🇼 中国台湾 (Taiwan) 04 (家宽) - xiaohe
   server: 118.167.209.5
   port: 24215
   udp: true
@@ -41,24 +36,35 @@ proxies:
   reality-opts:
     public-key: mdWKUPMVTtTbDqK10BPb89OcqBC2-Lx-4NOYtqc1GWE
   servername: addons.mozilla.org
-  client-fingerprint: chrome
+  client-fingerprint: firefox
+- name: 🇷🇴 罗马尼亚 (Romania) 04 (家宽) - xiaohe
+  server: roma2.moritech.net
+  port: 443
+  udp: true
+  type: vless
+  uuid: cd3bb7d9-7df3-4644-ac05-c260990ac277
+  flow: xtls-rprx-vision
+  tls: true
+  servername: roma2.moritech.net
+  skip-cert-verify: false
+  client-fingerprint: edge
 proxy-groups:
 - name: PROXIES
   type: select
   proxies:
   - AUTO
   - 🇺🇸 美国 (United States) 01 (家宽) - xiaohe
-  - 🇹🇼 中国台湾 (Taiwan) 02 (家宽) - xiaohe
+  - 🇩🇪 德国 (Germany) 02 (家宽) - xiaohe
   - 🇹🇼 中国台湾 (Taiwan) 03 (家宽) - xiaohe
-  - 🇹🇼 中国台湾 (Taiwan) 04 (家宽) - xiaohe
+  - 🇷🇴 罗马尼亚 (Romania) 04 (家宽) - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
   interval: 300
   proxies:
   - 🇺🇸 美国 (United States) 01 (家宽) - xiaohe
-  - 🇹🇼 中国台湾 (Taiwan) 02 (家宽) - xiaohe
+  - 🇩🇪 德国 (Germany) 02 (家宽) - xiaohe
   - 🇹🇼 中国台湾 (Taiwan) 03 (家宽) - xiaohe
-  - 🇹🇼 中国台湾 (Taiwan) 04 (家宽) - xiaohe
+  - 🇷🇴 罗马尼亚 (Romania) 04 (家宽) - xiaohe
 rules:
 - MATCH,PROXIES
