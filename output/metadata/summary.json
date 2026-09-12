@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-09-12T09:57:49.480086+00:00",
-  "alive_nodes": 991,
-  "confirmed_egress_nodes": 640,
-  "high_confidence_residential_nodes": 3,
-  "relaxed_residential_nodes": 3,
+  "generated_at": "2026-09-12T12:40:34.473312+00:00",
+  "alive_nodes": 943,
+  "confirmed_egress_nodes": 573,
+  "high_confidence_residential_nodes": 0,
+  "relaxed_residential_nodes": 0,
   "residential_tiers": {
-    "A": 3,
+    "A": 0,
     "B": 0,
-    "C": 988
+    "C": 943
   },
-  "unconfirmed_egress_nodes": 351,
+  "unconfirmed_egress_nodes": 370,
   "country_cap": 20,
   "residential_country_cap": 10
 }

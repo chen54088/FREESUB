@@ -29,14 +29,19 @@ proxies:
   reality-opts:
     public-key: VG-FwQBMFzPcemJ_JqtkbO-2WKLmQp2h0CmAj-DfLkA
   servername: deepl.com
-  client-fingerprint: chrome
+  client-fingerprint: random
 - name: 🇩🇪 德国 (Germany) 04 - Cicada_YH
-  type: ss
-  server: 213.202.208.199
-  port: 7001
-  cipher: aes-256-gcm
-  password: RexnBgU7EV5ADxG
+  type: vless
+  server: 93.152.217.41
+  port: 40443
+  uuid: 969bcce0-de8a-4b02-8cf8-d00d2d2ca7a5
   udp: true
+  tls: true
+  skip-cert-verify: true
+  reality-opts:
+    public-key: VG-FwQBMFzPcemJ_JqtkbO-2WKLmQp2h0CmAj-DfLkA
+  servername: deepl.com
+  client-fingerprint: firefox
 - name: 🇩🇪 德国 (Germany) 05 - Cicada_YH
   type: ss
   server: 209.46.102.22
@@ -46,17 +51,17 @@ proxies:
   udp: true
 - name: 🇩🇪 德国 (Germany) 06 - Cicada_YH
   type: ss
-  server: 2.58.81.221
-  port: 443
+  server: 213.202.208.199
+  port: 7001
   cipher: aes-256-gcm
-  password: kKEd0rBrd56Furjz
+  password: RexnBgU7EV5ADxG
   udp: true
 - name: 🇩🇪 德国 (Germany) 07 - Cicada_YH
   type: ss
-  server: 209.46.102.22
-  port: 8388
+  server: 8.209.74.72
+  port: 20001
   cipher: chacha20-ietf-poly1305
-  password: 1hhrqrokj3ag
+  password: PWpjPo3tqhPN4yRZ
   udp: true
 - name: 🇩🇪 德国 (Germany) 08 - Cicada_YH
   type: ss
@@ -67,10 +72,10 @@ proxies:
   udp: true
 - name: 🇩🇪 德国 (Germany) 09 - Cicada_YH
   type: ss
-  server: 51.195.126.38
+  server: 209.46.102.22
   port: 8388
   cipher: chacha20-ietf-poly1305
-  password: 2YdE4lFOid5a
+  password: 1hhrqrokj3ag
   udp: true
 - name: 🇩🇪 德国 (Germany) 10 - Cicada_YH
   type: ss
@@ -81,14 +86,21 @@ proxies:
   udp: true
 - name: 🇩🇪 德国 (Germany) 11 - Cicada_YH
   type: ss
-  server: 8.209.74.72
-  port: 20001
-  cipher: chacha20-ietf-poly1305
-  password: PWpjPo3tqhPN4yRZ
+  server: 2.58.81.221
+  port: 443
+  cipher: aes-256-gcm
+  password: kKEd0rBrd56Furjz
   udp: true
 - name: 🇩🇪 德国 (Germany) 12 - Cicada_YH
+  type: ss
+  server: 141.95.29.163
+  port: 2083
+  cipher: 2022-blake3-aes-256-gcm
+  password: cOiC+3JhAXMwdGV5exnrMSorJU0Rl5qlLCbCAuDlWY4=:JTou+JSmZOAyrMLdvNBcXFm0Y9luZ/8u17ie48jQfVc=
+  udp: true
+- name: 🇩🇪 德国 (Germany) 13 - Cicada_YH
   type: vmess
-  server: 5.188.26.85
+  server: 94.177.51.198
   port: 443
   uuid: db50a20e-7ff5-4e70-948f-17cc9ca7c154
   alterId: 0
@@ -102,20 +114,6 @@ proxies:
     path: /api/v1/gpu-stream/socket
     headers:
       Host: renderer-stream-2-62.mirra.now
-- name: 🇩🇪 德国 (Germany) 13 - Cicada_YH
-  type: vless
-  server: rubifen.adaspoloandco.com
-  port: 443
-  uuid: cf39fab0-bb85-42cb-9945-2ad69d78e575
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: rubifen.adaspoloandco.com
-  network: ws
-  ws-opts:
-    path: /GOrbEh
-    headers:
-      Host: rubifen.adaspoloandco.com
 - name: 🇩🇪 德国 (Germany) 14 - Cicada_YH
   type: vless
   server: 89.124.251.65
@@ -125,6 +123,19 @@ proxies:
   tls: true
   skip-cert-verify: true
   servername: connect6.nyxserver.ir
+- name: 🇩🇪 德国 (Germany) 15 - Cicada_YH
+  type: vless
+  server: 57.129.41.216
+  port: 80
+  uuid: 7d74eae4-8a06-4306-a923-ad686f30bf26
+  udp: true
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /vless/
+    headers:
+      Host: OV-Germany1.09vpn.com
 proxy-groups:
 - name: PROXIES
   type: select
@@ -144,6 +155,7 @@ proxy-groups:
   - 🇩🇪 德国 (Germany) 12 - Cicada_YH
   - 🇩🇪 德国 (Germany) 13 - Cicada_YH
   - 🇩🇪 德国 (Germany) 14 - Cicada_YH
+  - 🇩🇪 德国 (Germany) 15 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -163,5 +175,6 @@ proxy-groups:
   - 🇩🇪 德国 (Germany) 12 - Cicada_YH
   - 🇩🇪 德国 (Germany) 13 - Cicada_YH
   - 🇩🇪 德国 (Germany) 14 - Cicada_YH
+  - 🇩🇪 德国 (Germany) 15 - Cicada_YH
 rules:
 - MATCH,PROXIES

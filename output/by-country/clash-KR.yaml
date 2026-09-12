@@ -35,17 +35,24 @@ proxies:
 - name: 🇰🇷 韩国 (South Korea) 04 - Cicada_YH
   type: ss
   server: 141.164.45.187
-  port: 5498
+  port: 8091
   cipher: aes-256-gcm
-  password: lGqs95QkFHo2NV
+  password: PCnnH6SQSnfoS27
   udp: true
 - name: 🇰🇷 韩国 (South Korea) 05 - Cicada_YH
-  type: ss
-  server: 141.164.45.187
-  port: 8008
-  cipher: aes-256-gcm
-  password: XKFKl2rULjIp74
+  type: vless
+  server: 43.155.221.27
+  port: 8443
+  uuid: 3db635e4-f9ec-42d6-8aba-e23df8b0e6da
   udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: mia3.pages.dev
+  network: ws
+  ws-opts:
+    path: /TG:@MiaChatChannel
+    headers:
+      Host: mia3.pages.dev
 - name: 🇰🇷 韩国 (South Korea) 06 - Cicada_YH
   type: ss
   server: 141.164.45.187
@@ -56,16 +63,23 @@ proxies:
 - name: 🇰🇷 韩国 (South Korea) 07 - Cicada_YH
   type: ss
   server: 141.164.45.187
-  port: 2376
+  port: 7002
   cipher: aes-256-gcm
-  password: faBAoD54k87UJG7
+  password: RexnBgU7EV5ADxG
   udp: true
 - name: 🇰🇷 韩国 (South Korea) 08 - Cicada_YH
   type: ss
   server: 141.164.45.187
-  port: 8119
+  port: 8888
   cipher: aes-256-gcm
-  password: cdBIDV42DCwnfIN
+  password: Y6R9pAtvxxzmGC
+  udp: true
+- name: 🇰🇷 韩国 (South Korea) 09 - Cicada_YH
+  type: ss
+  server: 141.164.45.187
+  port: 2376
+  cipher: aes-256-gcm
+  password: faBAoD54k87UJG7
   udp: true
 proxy-groups:
 - name: PROXIES
@@ -80,6 +94,7 @@ proxy-groups:
   - 🇰🇷 韩国 (South Korea) 06 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 07 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 08 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 09 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -93,5 +108,6 @@ proxy-groups:
   - 🇰🇷 韩国 (South Korea) 06 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 07 - Cicada_YH
   - 🇰🇷 韩国 (South Korea) 08 - Cicada_YH
+  - 🇰🇷 韩国 (South Korea) 09 - Cicada_YH
 rules:
 - MATCH,PROXIES

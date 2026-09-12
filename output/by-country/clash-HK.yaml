@@ -10,7 +10,7 @@ proxies:
   port: 443
   password: BxceQaOe
   udp: true
-  sni: 119.246.1.143
+  sni: t.me%2Fripaojiedian
   skip-cert-verify: true
 - name: 🇭🇰 中国香港 (Hong Kong) 02 - Cicada_YH
   type: trojan
@@ -18,64 +18,54 @@ proxies:
   port: 443
   password: BxceQaOe
   udp: true
-  sni: t.me%252fripaojiedian
+  sni: 119.246.1.143
   skip-cert-verify: true
 - name: 🇭🇰 中国香港 (Hong Kong) 03 - Cicada_YH
-  type: vmess
-  server: 93ucrn4i0pffuabk.v.3dns.vip
-  port: 443
-  uuid: f23bb427c1f94373876c2f43e9f790f3
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: 93ucrn4i0pffuabk.v.3dns.vip
-  network: ws
-  ws-opts:
-    path: /ws-vmess
-    headers:
-      Host: 93ucrn4i0pffuabk.v.3dns.vip
-- name: 🇭🇰 中国香港 (Hong Kong) 04 - Cicada_YH
-  type: vmess
-  server: 47.83.19.148
-  port: 443
-  uuid: f23bb427-c1f9-4373-876c-2f43e9f790f3
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: 6JDvArazgU3qQR6Q.v.3dns.vip
-  network: ws
-  ws-opts:
-    path: /ws-vmess
-    headers:
-      Host: 6JDvArazgU3qQR6Q.v.3dns.vip
-- name: 🇭🇰 中国香港 (Hong Kong) 05 - Cicada_YH
   type: trojan
   server: 119.246.1.143
   port: 443
   password: BxceQaOe
   udp: true
-  sni: t.me%2Fripaojiedian
+  sni: 119.246.1.143
   skip-cert-verify: true
-- name: 🇭🇰 中国香港 (Hong Kong) 06 - Cicada_YH
-  type: vmess
-  server: ce0gedpxwou6cqon.v.3dns.vip
+- name: 🇭🇰 中国香港 (Hong Kong) 04 - Cicada_YH
+  type: trojan
+  server: 119.246.1.143
   port: 443
-  uuid: f23bb427c1f94373876c2f43e9f790f3
+  password: BxceQaOe
+  udp: true
+  sni: t.me%252fripaojiedian
+  skip-cert-verify: true
+- name: 🇭🇰 中国香港 (Hong Kong) 05 - Cicada_YH
+  type: ss
+  server: 103.136.150.237
+  port: 8388
+  cipher: aes-256-gcm
+  password: KSdf3qeTB5TGlFPn
+  udp: true
+- name: 🇭🇰 中国香港 (Hong Kong) 06 - Cicada_YH
+  type: trojan
+  server: 119.246.1.143
+  port: 443
+  password: BxceQaOe
+  udp: true
+  sni: t.me
+  skip-cert-verify: true
+- name: 🇭🇰 中国香港 (Hong Kong) 07 - Cicada_YH
+  type: vmess
+  server: 156.245.232.239
+  port: 35043
+  uuid: b15e481d-17e4-41a8-84c2-23d4f0514d9a
   alterId: 0
   cipher: auto
   udp: true
-  tls: true
+  tls: false
   skip-cert-verify: true
-  servername: ce0gedpxwou6cqon.v.3dns.vip
   network: ws
   ws-opts:
-    path: /ws-vmess
+    path: /
     headers:
-      Host: ce0gedpxwou6cqon.v.3dns.vip
+      Host: ''
 proxy-groups:
 - name: PROXIES
   type: select
@@ -87,6 +77,7 @@ proxy-groups:
   - 🇭🇰 中国香港 (Hong Kong) 04 - Cicada_YH
   - 🇭🇰 中国香港 (Hong Kong) 05 - Cicada_YH
   - 🇭🇰 中国香港 (Hong Kong) 06 - Cicada_YH
+  - 🇭🇰 中国香港 (Hong Kong) 07 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -98,5 +89,6 @@ proxy-groups:
   - 🇭🇰 中国香港 (Hong Kong) 04 - Cicada_YH
   - 🇭🇰 中国香港 (Hong Kong) 05 - Cicada_YH
   - 🇭🇰 中国香港 (Hong Kong) 06 - Cicada_YH
+  - 🇭🇰 中国香港 (Hong Kong) 07 - Cicada_YH
 rules:
 - MATCH,PROXIES

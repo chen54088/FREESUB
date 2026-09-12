@@ -18,27 +18,20 @@ proxies:
     headers:
       Host: 38.60.168.98
 - name: 🇲🇾 MY 02 - Cicada_YH
-  type: vless
-  server: 38.60.168.98
-  port: 2087
-  uuid: 8a346b7c-5b95-4845-affa-0e5d9929e9ae
+  type: trojan
+  server: 47.250.84.25
+  port: 443
+  password: 5931134d1cde66bf83a54acdfebe7ab2
   udp: true
-  tls: false
+  sni: 47.250.84.25
   skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /db55c40bbc75
-    headers:
-      Host: 38.60.168.98
 - name: 🇲🇾 MY 03 - Cicada_YH
-  type: vmess
-  server: 47.250.135.244
-  port: 10000
-  uuid: aedc66b8-99d7-4a21-8310-61870e7f870d
-  alterId: 0
-  cipher: auto
+  type: trojan
+  server: 47.250.84.25
+  port: 443
+  password: 5931134d1cde66bf83a54acdfebe7ab2
   udp: true
-  tls: false
+  sni: moltbot.doctoroyy.net
   skip-cert-verify: true
 - name: 🇲🇾 MY 04 - Cicada_YH
   type: trojan
@@ -49,14 +42,6 @@ proxies:
   sni: moltbot.doctoroyy.net
   skip-cert-verify: true
 - name: 🇲🇾 MY 05 - Cicada_YH
-  type: trojan
-  server: 47.250.84.25
-  port: 443
-  password: 5931134d1cde66bf83a54acdfebe7ab2
-  udp: true
-  sni: 47.250.84.25
-  skip-cert-verify: true
-- name: 🇲🇾 MY 06 - Cicada_YH
   type: vmess
   server: 47.250.45.234
   port: 43063
@@ -81,7 +66,6 @@ proxy-groups:
   - 🇲🇾 MY 03 - Cicada_YH
   - 🇲🇾 MY 04 - Cicada_YH
   - 🇲🇾 MY 05 - Cicada_YH
-  - 🇲🇾 MY 06 - Cicada_YH
 - name: AUTO
   type: url-test
   url: https://www.google.com/generate_204
@@ -92,6 +76,5 @@ proxy-groups:
   - 🇲🇾 MY 03 - Cicada_YH
   - 🇲🇾 MY 04 - Cicada_YH
   - 🇲🇾 MY 05 - Cicada_YH
-  - 🇲🇾 MY 06 - Cicada_YH
 rules:
 - MATCH,PROXIES
