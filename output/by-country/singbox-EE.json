@@ -38,7 +38,7 @@
       "tls": {
         "enabled": true,
         "server_name": "cabinet.wwwinternetvideo.click",
-        "insecure": true
+        "insecure": false
       }
     },
     {

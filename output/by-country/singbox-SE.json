@@ -81,7 +81,7 @@
       "tls": {
         "enabled": true,
         "server_name": "cf2.rumedia-cdn.com",
-        "insecure": false
+        "insecure": true
       }
     },
     {
