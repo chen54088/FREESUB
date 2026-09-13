@@ -14,7 +14,7 @@ proxies:
   ws-opts:
     path: /ws
     headers:
-      Host: ais.speedtest.net
+      Host: aIs.SpEeDtEsT.nEt
 proxy-groups:
 - name: PROXIES
   type: select
