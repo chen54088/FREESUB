@@ -21,7 +21,7 @@ proxies:
   type: hysteria2
   password: sOiWCQ2AdIV0OWNuqQVyWp4JZnRxdyLROSjX
   sni: cabinet.wwwinternetvideo.click
-  skip-cert-verify: true
+  skip-cert-verify: false
 proxy-groups:
 - name: PROXIES
   type: select

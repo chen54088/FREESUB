@@ -4,8 +4,53 @@
   },
   "outbounds": [
     {
-      "type": "vless",
+      "type": "hysteria2",
       "tag": "🇮🇳 印度 (India) 01 - xiaohe",
+      "server": "13.207.151.141",
+      "server_port": 443,
+      "password": "H7mP2xY9kJ4nQ8wR5tF6vB3z",
+      "tls": {
+        "enabled": true,
+        "server_name": "vpn-in-001.fastervpn.world",
+        "insecure": true
+      }
+    },
+    {
+      "type": "hysteria2",
+      "tag": "🇮🇳 印度 (India) 02 - xiaohe",
+      "server": "35.154.58.87",
+      "server_port": 443,
+      "password": "H7mP2xY9kJ4nQ8wR5tF6vB3z",
+      "tls": {
+        "enabled": true,
+        "server_name": "vpn-in-001.fastervpn.world",
+        "insecure": true
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "🇮🇳 印度 (India) 03 - xiaohe",
+      "server": "5.253.42.163",
+      "server_port": 40443,
+      "uuid": "15fd22d1-8931-4d41-af37-8ba6711e93fe",
+      "flow": "xtls-rprx-vision",
+      "tls": {
+        "enabled": true,
+        "server_name": "deepl.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "edge"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "d1gJntekIStCHyAwgJCuv-N4_BBx5dDQ7K6CeWmpMRo",
+          "short_id": "84fc"
+        }
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "🇮🇳 印度 (India) 04 - xiaohe",
       "server": "194.61.31.126",
       "server_port": 2053,
       "uuid": "1d4e18bd-1f26-4915-b35a-7ace4826e76a",
@@ -24,27 +69,24 @@
       }
     },
     {
-      "type": "hysteria2",
-      "tag": "🇮🇳 印度 (India) 02 - xiaohe",
-      "server": "13.207.151.141",
-      "server_port": 443,
-      "password": "H7mP2xY9kJ4nQ8wR5tF6vB3z",
+      "type": "vless",
+      "tag": "🇮🇳 印度 (India) 05 - xiaohe",
+      "server": "5.253.28.242",
+      "server_port": 40443,
+      "uuid": "af5eac96-e478-488a-bc8c-45269d7e8847",
+      "flow": "xtls-rprx-vision",
       "tls": {
         "enabled": true,
-        "server_name": "vpn-in-001.fastervpn.world",
-        "insecure": true
-      }
-    },
-    {
-      "type": "hysteria2",
-      "tag": "🇮🇳 印度 (India) 03 - xiaohe",
-      "server": "35.154.58.87",
-      "server_port": 443,
-      "password": "H7mP2xY9kJ4nQ8wR5tF6vB3z",
-      "tls": {
-        "enabled": true,
-        "server_name": "vpn-in-001.fastervpn.world",
-        "insecure": true
+        "server_name": "deepl.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "firefox"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "g77ZJbm18JEotapmVRjaXi133MzkbhkU2lxhVeXx8zw",
+          "short_id": "68a8"
+        }
       }
     },
     {
@@ -54,7 +96,9 @@
         "auto",
         "🇮🇳 印度 (India) 01 - xiaohe",
         "🇮🇳 印度 (India) 02 - xiaohe",
-        "🇮🇳 印度 (India) 03 - xiaohe"
+        "🇮🇳 印度 (India) 03 - xiaohe",
+        "🇮🇳 印度 (India) 04 - xiaohe",
+        "🇮🇳 印度 (India) 05 - xiaohe"
       ]
     },
     {
@@ -63,7 +107,9 @@
       "outbounds": [
         "🇮🇳 印度 (India) 01 - xiaohe",
         "🇮🇳 印度 (India) 02 - xiaohe",
-        "🇮🇳 印度 (India) 03 - xiaohe"
+        "🇮🇳 印度 (India) 03 - xiaohe",
+        "🇮🇳 印度 (India) 04 - xiaohe",
+        "🇮🇳 印度 (India) 05 - xiaohe"
       ],
       "url": "https://www.gstatic.com/generate_204"
     },
