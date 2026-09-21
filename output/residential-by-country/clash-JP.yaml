@@ -12,11 +12,10 @@ proxies:
   uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
   tls: true
   servername: cdn8848.776676.xyz
-  skip-cert-verify: false
-  client-fingerprint: chrome
+  skip-cert-verify: true
   network: ws
   ws-opts:
-    path: /settings?ed=2560
+    path: /
     headers:
       Host: cdn8848.776676.xyz
 proxy-groups:

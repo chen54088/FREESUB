@@ -12,15 +12,10 @@
       "tls": {
         "enabled": true,
         "server_name": "cdn8848.776676.xyz",
-        "insecure": false,
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
+        "insecure": true
       },
       "transport": {
         "type": "ws",
-        "path": "/settings?ed=2560",
         "headers": {
           "Host": "cdn8848.776676.xyz"
         }
