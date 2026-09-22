@@ -1,0 +1,75 @@
+{
+  "log": {
+    "level": "warn"
+  },
+  "outbounds": [
+    {
+      "type": "vless",
+      "tag": "🌐 其他地区 (Other) 01 - xiaohe",
+      "server": "store.epicgames.com",
+      "server_port": 443,
+      "uuid": "47fcef29-ab4e-4aa6-932b-d95a18f28a4e",
+      "tls": {
+        "enabled": true,
+        "server_name": "e34bq.oa9r.zl3.hh.vavava.kdns.fr",
+        "insecure": false
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/?ed=2560",
+        "headers": {
+          "Host": "e34bq.oa9r.zl3.hh.vavava.kdns.fr"
+        }
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "🌐 其他地区 (Other) 02 - xiaohe",
+      "server": "172.67.182.152",
+      "server_port": 443,
+      "uuid": "2240d8f8-898f-4988-8c08-ac724aa06ddb",
+      "tls": {
+        "enabled": true,
+        "server_name": "7-m9.hat-yai.kdns.fr",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/BzuntJ8qZN0TRKbC8TveMxJ0",
+        "headers": {
+          "Host": "7-m9.hat-yai.kdns.fr"
+        }
+      }
+    },
+    {
+      "type": "selector",
+      "tag": "select",
+      "outbounds": [
+        "auto",
+        "🌐 其他地区 (Other) 01 - xiaohe",
+        "🌐 其他地区 (Other) 02 - xiaohe"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "auto",
+      "outbounds": [
+        "🌐 其他地区 (Other) 01 - xiaohe",
+        "🌐 其他地区 (Other) 02 - xiaohe"
+      ],
+      "url": "https://www.gstatic.com/generate_204"
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    }
+  ]
+}
