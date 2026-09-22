@@ -6,22 +6,20 @@
     {
       "type": "vless",
       "tag": "🇧🇷 巴西 (Brazil) 01 - xiaohe",
-      "server": "193.181.216.117",
-      "server_port": 2053,
-      "uuid": "d342d11e-d424-4583-b36e-524ab1f0afa4",
+      "server": "35.199.90.53",
+      "server_port": 443,
+      "uuid": "e9c2ed7f-79ab-40a8-8910-24468f5da712",
       "tls": {
         "enabled": true,
-        "server_name": "cdn8848.776676.xyz",
-        "insecure": true,
+        "server_name": "www.cloudflare.com",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
-        }
-      },
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "cdn8848.776676.xyz"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "0WXz3PJQnr-KprrwiO5BlKVRdqA4ZS6U5jGHc_aeJnw",
+          "short_id": "4b414f69a06e1e81"
         }
       }
     },
