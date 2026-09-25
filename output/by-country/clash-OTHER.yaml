@@ -5,35 +5,42 @@ mode: rule
 log-level: info
 proxies:
 - name: 🌐 其他地区 (Other) 01 - xiaohe
-  server: 172.67.219.50
-  port: 443
+  server: 188.114.97.6
+  port: 2086
   udp: true
   type: vless
-  uuid: a5b1d1ec-327c-f1c5-5856-b34600000000
-  tls: true
-  servername: ez-541f9d.ezaccess1d3db24.workers.dev
-  skip-cert-verify: false
-  client-fingerprint: chrome
+  uuid: 47fcef29-ab4e-4aa6-932b-d95a18f28a4e
   network: ws
   ws-opts:
-    path: /sync
+    path: /
     headers:
-      Host: ez-541f9d.ezaccess1d3db24.workers.dev
+      Host: zb1zi.s3nx.dyz.hh.vavava.kdns.fr
 - name: 🌐 其他地区 (Other) 02 - xiaohe
-  server: 104.21.45.213
+  server: 188.114.97.6
+  port: 2086
+  udp: true
+  type: vless
+  uuid: 47fcef29-ab4e-4aa6-932b-d95a18f28a4e
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: zb1zi.s3nx.dyz.hh.vavava.kdns.fr
+- name: 🌐 其他地区 (Other) 03 - xiaohe
+  server: 104.18.15.103
   port: 443
   udp: true
   type: vless
-  uuid: a5b1d1ec-327c-f1c5-5856-b34600000000
+  uuid: 3c6d1933-b22a-484b-ac8a-63e24f5fba75
   tls: true
-  servername: ez-541f9d.ezaccess1d3db24.workers.dev
+  servername: server9.9966338.xyz
   skip-cert-verify: false
   client-fingerprint: chrome
   network: ws
   ws-opts:
-    path: /sync
+    path: /imnotarealherox
     headers:
-      Host: ez-541f9d.ezaccess1d3db24.workers.dev
+      Host: server9.9966338.xyz
 proxy-groups:
 - name: PROXIES
   type: select
@@ -41,6 +48,7 @@ proxy-groups:
   - AUTO
   - 🌐 其他地区 (Other) 01 - xiaohe
   - 🌐 其他地区 (Other) 02 - xiaohe
+  - 🌐 其他地区 (Other) 03 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
@@ -48,5 +56,6 @@ proxy-groups:
   proxies:
   - 🌐 其他地区 (Other) 01 - xiaohe
   - 🌐 其他地区 (Other) 02 - xiaohe
+  - 🌐 其他地区 (Other) 03 - xiaohe
 rules:
 - MATCH,PROXIES
