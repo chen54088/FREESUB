@@ -5,12 +5,16 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇳🇴 挪威 (Norway) 01 - xiaohe
-  server: 139.100.236.74
-  port: 1
+  server: 31.76.5.51
+  port: 443
   udp: true
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: WxYpOK1iPSJySbVNMMJDtw
+  type: vless
+  uuid: cd3bb7d9-7df3-4644-ac05-c260990ac277
+  flow: xtls-rprx-vision
+  tls: true
+  servername: norw-mori-5.failspace.top
+  skip-cert-verify: false
+  client-fingerprint: safari
 proxy-groups:
 - name: PROXIES
   type: select
