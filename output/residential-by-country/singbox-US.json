@@ -6,14 +6,23 @@
     {
       "type": "vless",
       "tag": "🇺🇸 美国 (United States) 01 (家宽) - xiaohe",
-      "server": "162.159.45.19",
-      "server_port": 2052,
-      "uuid": "47fcef29-ab4e-4aa6-932b-d95a18f28a4e",
+      "server": "104.16.174.164",
+      "server_port": 443,
+      "uuid": "73796e63-0000-4000-8000-000000000000",
+      "tls": {
+        "enabled": true,
+        "server_name": "wireguard.ahmad-kh5716.workers.dev",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
       "transport": {
         "type": "ws",
-        "path": "/?ed=2560security=tls",
+        "path": "/sync",
         "headers": {
-          "Host": "8nj2r.2k8t.f88.hh.vavava.kdns.fr"
+          "Host": "wireguard.ahmad-kh5716.workers.dev"
         }
       }
     },
