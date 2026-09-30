@@ -4,16 +4,16 @@ allow-lan: true
 mode: rule
 log-level: info
 proxies:
-- name: 🇲🇽 墨西哥 (Mexico) 01 - xiaohe
-  server: 34.51.119.243
+- name: 🇨🇱 智利 (Chile) 01 - xiaohe
+  server: 34.176.187.219
   port: 443
   udp: true
   type: vless
-  uuid: 79bc7b01-6e4e-4365-a120-fefac8182bd9
+  uuid: ad5325f8-f0b3-41c4-a561-113529b60e70
   tls: true
   reality-opts:
-    public-key: vFcM44RcbcO5jcrSWHLd_0exXAnnJLhpCNnMrWCwlzI
-    short-id: 65f01b4b99e52015
+    public-key: HnHVuSObMrldWGzq1-Eb93fwgu6QQRp6H0_8LX3ikDc
+    short-id: 2c2d919f5183d0b7
   servername: www.cloudflare.com
   client-fingerprint: chrome
 proxy-groups:
@@ -21,12 +21,12 @@ proxy-groups:
   type: select
   proxies:
   - AUTO
-  - 🇲🇽 墨西哥 (Mexico) 01 - xiaohe
+  - 🇨🇱 智利 (Chile) 01 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
   interval: 300
   proxies:
-  - 🇲🇽 墨西哥 (Mexico) 01 - xiaohe
+  - 🇨🇱 智利 (Chile) 01 - xiaohe
 rules:
 - MATCH,PROXIES
