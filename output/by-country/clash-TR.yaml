@@ -5,6 +5,14 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇹🇷 土耳其 (Turkey) 01 - xiaohe
+  server: netork.povrak.ir
+  port: 37523
+  udp: true
+  type: vmess
+  uuid: ce0bcb75-baa7-41a7-833e-eb54a8f6a08e
+  alterId: 0
+  cipher: auto
+- name: 🇹🇷 土耳其 (Turkey) 02 - xiaohe
   server: 206.1.103.221
   port: 42264
   udp: true
@@ -17,11 +25,13 @@ proxy-groups:
   proxies:
   - AUTO
   - 🇹🇷 土耳其 (Turkey) 01 - xiaohe
+  - 🇹🇷 土耳其 (Turkey) 02 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
   interval: 300
   proxies:
   - 🇹🇷 土耳其 (Turkey) 01 - xiaohe
+  - 🇹🇷 土耳其 (Turkey) 02 - xiaohe
 rules:
 - MATCH,PROXIES
