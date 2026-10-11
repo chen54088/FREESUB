@@ -5,13 +5,12 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇪🇸 西班牙 (Spain) 01 - xiaohe
-  server: 185.174.137.172
-  port: 8446
+  server: 108.181.121.226
+  port: 8388
   udp: true
-  type: hysteria2
-  password: e9dc02d400b67c727aca1620
-  sni: 185.174.137.172
-  skip-cert-verify: true
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: WSyL4XTwNsdv
 proxy-groups:
 - name: PROXIES
   type: select

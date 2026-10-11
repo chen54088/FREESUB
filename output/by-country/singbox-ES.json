@@ -4,16 +4,12 @@
   },
   "outbounds": [
     {
-      "type": "hysteria2",
+      "type": "shadowsocks",
       "tag": "🇪🇸 西班牙 (Spain) 01 - xiaohe",
-      "server": "185.174.137.172",
-      "server_port": 8446,
-      "password": "e9dc02d400b67c727aca1620",
-      "tls": {
-        "enabled": true,
-        "server_name": "185.174.137.172",
-        "insecure": true
-      }
+      "server": "108.181.121.226",
+      "server_port": 8388,
+      "method": "chacha20-ietf-poly1305",
+      "password": "WSyL4XTwNsdv"
     },
     {
       "type": "selector",
