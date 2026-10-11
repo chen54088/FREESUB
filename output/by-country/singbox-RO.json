@@ -32,12 +32,34 @@
       }
     },
     {
+      "type": "vless",
+      "tag": "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe",
+      "server": "82.152.132.120",
+      "server_port": 443,
+      "uuid": "3e0c1fbf-467a-49d7-abd2-3a158628f3d0",
+      "flow": "xtls-rprx-vision",
+      "tls": {
+        "enabled": true,
+        "server_name": "ro1.gigobingo.ru",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "firefox"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "Aj6Op88j_eYXxoBw095KS_NnKCBm5uwa874uumXdiDQ",
+          "short_id": "ef7c4e4302bd52d7"
+        }
+      }
+    },
+    {
       "type": "selector",
       "tag": "select",
       "outbounds": [
         "auto",
         "🇷🇴 罗马尼亚 (Romania) 01 - xiaohe",
-        "🇷🇴 罗马尼亚 (Romania) 02 - xiaohe"
+        "🇷🇴 罗马尼亚 (Romania) 02 - xiaohe",
+        "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe"
       ]
     },
     {
@@ -45,7 +67,8 @@
       "tag": "auto",
       "outbounds": [
         "🇷🇴 罗马尼亚 (Romania) 01 - xiaohe",
-        "🇷🇴 罗马尼亚 (Romania) 02 - xiaohe"
+        "🇷🇴 罗马尼亚 (Romania) 02 - xiaohe",
+        "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe"
       ],
       "url": "https://www.gstatic.com/generate_204"
     },

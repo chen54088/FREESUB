@@ -22,6 +22,19 @@ proxies:
   skip-cert-verify: false
   obfs: salamander
   obfs-password: c1b4086fea89914496c7e10967a419216566
+- name: 🇷🇴 罗马尼亚 (Romania) 03 - xiaohe
+  server: 82.152.132.120
+  port: 443
+  udp: true
+  type: vless
+  uuid: 3e0c1fbf-467a-49d7-abd2-3a158628f3d0
+  flow: xtls-rprx-vision
+  tls: true
+  reality-opts:
+    public-key: Aj6Op88j_eYXxoBw095KS_NnKCBm5uwa874uumXdiDQ
+    short-id: ef7c4e4302bd52d7
+  servername: ro1.gigobingo.ru
+  client-fingerprint: firefox
 proxy-groups:
 - name: PROXIES
   type: select
@@ -29,6 +42,7 @@ proxy-groups:
   - AUTO
   - 🇷🇴 罗马尼亚 (Romania) 01 - xiaohe
   - 🇷🇴 罗马尼亚 (Romania) 02 - xiaohe
+  - 🇷🇴 罗马尼亚 (Romania) 03 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
@@ -36,5 +50,6 @@ proxy-groups:
   proxies:
   - 🇷🇴 罗马尼亚 (Romania) 01 - xiaohe
   - 🇷🇴 罗马尼亚 (Romania) 02 - xiaohe
+  - 🇷🇴 罗马尼亚 (Romania) 03 - xiaohe
 rules:
 - MATCH,PROXIES
