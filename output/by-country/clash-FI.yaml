@@ -5,53 +5,60 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇫🇮 芬兰 (Finland) 01 - xiaohe
-  server: 144.31.212.253
-  port: 443
-  udp: true
-  type: hysteria2
-  password: cf83b611-6cba-4535-adcb-8da06c6a9146
-  sni: vps155-edge.kermemehori.ru
-  skip-cert-verify: true
-- name: 🇫🇮 芬兰 (Finland) 02 - xiaohe
-  server: edge10.cyrionflare.com
-  port: 2052
-  udp: true
-  type: vless
-  uuid: 1a8ecc41-6e62-431b-8eca-87c2fa4dc286
-- name: 🇫🇮 芬兰 (Finland) 03 - xiaohe
-  server: 170.168.4.59
-  port: 17170
-  udp: true
-  type: vless
-  uuid: 3eec23c1-2a0d-4d53-afa5-62745a1f5ffe
-  tls: true
-  servername: northerntrail.gazette.help
-  skip-cert-verify: false
-  client-fingerprint: chrome
-  network: grpc
-  grpc-opts:
-    grpc-service-name: trail-grpc
-- name: 🇫🇮 芬兰 (Finland) 04 - xiaohe
   server: 185.103.110.68
   port: 18283
   udp: true
   type: ss
   cipher: aes-128-gcm
   password: f9300a9bf39ae0347c3a3bfbc4dd7754
-- name: 🇫🇮 芬兰 (Finland) 05 - xiaohe
+- name: 🇫🇮 芬兰 (Finland) 02 - xiaohe
   server: 185.103.110.66
   port: 18280
   udp: true
   type: ss
   cipher: aes-128-gcm
   password: f9300a9bf39ae0347c3a3bfbc4dd7754
-- name: 🇫🇮 芬兰 (Finland) 06 - xiaohe
+- name: 🇫🇮 芬兰 (Finland) 03 - xiaohe
+  server: edge10.cyrionflare.com
+  port: 2052
+  udp: true
+  type: vless
+  uuid: 1a8ecc41-6e62-431b-8eca-87c2fa4dc286
+- name: 🇫🇮 芬兰 (Finland) 04 - xiaohe
+  server: 84.22.150.39
+  port: 7443
+  udp: true
+  type: vless
+  uuid: 9d5cbb90-876b-448d-9874-27ab35bae6e7
+  tls: true
+  servername: woc0zvrf11w2endu.dphdlc1u77bs3y4kvussbuap4p576f1ws7igthq8zbf3.workers.dev
+  skip-cert-verify: false
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /@Marisa_kristi
+    headers:
+      Host: woc0zvrf11w2endu.dphdlc1u77bs3y4kvussbuap4p576f1ws7igthq8zbf3.workers.dev
+- name: 🇫🇮 芬兰 (Finland) 05 - xiaohe
   server: 45.149.114.171
   port: 777
   udp: true
   type: ss
   cipher: chacha20-ietf-poly1305
   password: Jeoq8ujfkqZKKvACQhoqBQ1PA3uq4242
+- name: 🇫🇮 芬兰 (Finland) 06 - xiaohe
+  server: tundra.venorix.online
+  port: 443
+  udp: true
+  type: vless
+  uuid: 6c21cf57-a9a9-4075-ad9f-631152bd911e
+  flow: xtls-rprx-vision
+  tls: true
+  reality-opts:
+    public-key: IHm9_n5a0hMAvgclNtwWpNpq68Xdj9-Q5NG3eLkcFjE
+    short-id: 52fe21c959620cd8
+  servername: tundra.venorix.online
+  client-fingerprint: firefox
 proxy-groups:
 - name: PROXIES
   type: select
