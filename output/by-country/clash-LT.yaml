@@ -6,23 +6,54 @@ log-level: info
 proxies:
 - name: 🇱🇹 立陶宛 (Lithuania) 01 - xiaohe
   server: 195.238.126.20
+  port: 9086
+  udp: true
+  type: ss
+  cipher: aes-256-cfb
+  password: 37Z4TFCYhfxcpc9Q
+- name: 🇱🇹 立陶宛 (Lithuania) 02 - xiaohe
+  server: 195.238.126.20
+  port: 9068
+  udp: true
+  type: ss
+  cipher: aes-256-cfb
+  password: mwgRg9hRq3b4Qnwb
+- name: 🇱🇹 立陶宛 (Lithuania) 03 - xiaohe
+  server: 195.238.126.20
+  port: 9012
+  udp: true
+  type: ss
+  cipher: aes-256-cfb
+  password: xaupMUvhptwxdDUg
+- name: 🇱🇹 立陶宛 (Lithuania) 04 - xiaohe
+  server: 195.238.126.20
   port: 9002
   udp: true
   type: ss
   cipher: aes-256-cfb
   password: b8KkNDjEd5QqFyRm
-- name: 🇱🇹 立陶宛 (Lithuania) 02 - xiaohe
-  server: 80.209.237.144
+- name: 🇱🇹 立陶宛 (Lithuania) 05 - xiaohe
+  server: 69.46.46.31
   port: 443
   udp: true
   type: vless
-  uuid: f90b7d43-69e2-4b46-a672-8029bc6796a2
+  uuid: 75995e72-6885-1e0a-a55e-498f2f897a54
   tls: true
-  reality-opts:
-    public-key: MbRONgV8ADD5B_aKDBv15LAW2a8QZok5bkkZexRRVAs
-    short-id: 2301ac8aee8bf6d4
-  servername: b58e68t.lt1.h1clayd.click
-  client-fingerprint: ''
+  servername: telegramemen-timazadi-8585.up.railway.app
+  skip-cert-verify: false
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /ws/75995e72-6885-1e0a-a55e-498f2f897a54
+    headers:
+      Host: telegramemen-timazadi-8585.up.railway.app
+- name: 🇱🇹 立陶宛 (Lithuania) 06 - xiaohe
+  server: 195.238.126.20
+  port: 9008
+  udp: true
+  type: ss
+  cipher: aes-256-cfb
+  password: y9VURyNzJWNRYEGQ
 proxy-groups:
 - name: PROXIES
   type: select
@@ -30,6 +61,10 @@ proxy-groups:
   - AUTO
   - 🇱🇹 立陶宛 (Lithuania) 01 - xiaohe
   - 🇱🇹 立陶宛 (Lithuania) 02 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 03 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 04 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 05 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 06 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
@@ -37,5 +72,9 @@ proxy-groups:
   proxies:
   - 🇱🇹 立陶宛 (Lithuania) 01 - xiaohe
   - 🇱🇹 立陶宛 (Lithuania) 02 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 03 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 04 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 05 - xiaohe
+  - 🇱🇹 立陶宛 (Lithuania) 06 - xiaohe
 rules:
 - MATCH,PROXIES
