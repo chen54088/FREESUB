@@ -6,19 +6,19 @@
     {
       "type": "trojan",
       "tag": "🌐 其他地区 (Other) 01 - xiaohe",
-      "server": "104.21.48.18",
-      "server_port": 2053,
-      "password": "e309e031-991e-4656-9934-44d10deb8fd8",
+      "server": "108.162.194.134",
+      "server_port": 443,
+      "password": "humanity",
       "tls": {
         "enabled": true,
-        "server_name": "nimm.mpd.cc.cd",
+        "server_name": "www.pleadcourt.org",
         "insecure": false
       },
       "transport": {
         "type": "ws",
-        "path": "/0962",
+        "path": "/assignment",
         "headers": {
-          "Host": "nimm.mpd.cc.cd"
+          "Host": "www.pleadcourt.org"
         }
       }
     },
