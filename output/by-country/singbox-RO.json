@@ -4,14 +4,14 @@
   },
   "outbounds": [
     {
-      "type": "hysteria2",
+      "type": "trojan",
       "tag": "🇷🇴 罗马尼亚 (Romania) 01 - xiaohe",
-      "server": "185.156.44.99",
+      "server": "de1.dedushka.top",
       "server_port": 443,
-      "password": "gf1:gfhysteria2024",
+      "password": "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA",
       "tls": {
         "enabled": true,
-        "server_name": "www.amazon.com",
+        "server_name": "de1.dedushka.top",
         "insecure": true
       }
     },
@@ -37,24 +37,16 @@
       }
     },
     {
-      "type": "trojan",
+      "type": "hysteria2",
       "tag": "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe",
-      "server": "de1.dedushka.top",
+      "server": "185.156.44.99",
       "server_port": 443,
-      "password": "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA",
+      "password": "gf1:gfhysteria2024",
       "tls": {
         "enabled": true,
-        "server_name": "de1.dedushka.top",
+        "server_name": "www.amazon.com",
         "insecure": true
       }
-    },
-    {
-      "type": "shadowsocks",
-      "tag": "🇷🇴 罗马尼亚 (Romania) 04 - xiaohe",
-      "server": "154.46.31.106",
-      "server_port": 443,
-      "method": "chacha20-ietf-poly1305",
-      "password": "QFWzCw2uX9B9i6qAYeFBIE"
     },
     {
       "type": "selector",
@@ -63,8 +55,7 @@
         "auto",
         "🇷🇴 罗马尼亚 (Romania) 01 - xiaohe",
         "🇷🇴 罗马尼亚 (Romania) 02 - xiaohe",
-        "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe",
-        "🇷🇴 罗马尼亚 (Romania) 04 - xiaohe"
+        "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe"
       ]
     },
     {
@@ -73,8 +64,7 @@
       "outbounds": [
         "🇷🇴 罗马尼亚 (Romania) 01 - xiaohe",
         "🇷🇴 罗马尼亚 (Romania) 02 - xiaohe",
-        "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe",
-        "🇷🇴 罗马尼亚 (Romania) 04 - xiaohe"
+        "🇷🇴 罗马尼亚 (Romania) 03 - xiaohe"
       ],
       "url": "https://www.gstatic.com/generate_204"
     },
