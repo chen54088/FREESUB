@@ -5,11 +5,26 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇲🇾 马来西亚 (Malaysia) 01 - xiaohe
+  server: 111.90.143.184
+  port: 61111
+  udp: true
+  type: vless
+  uuid: 30572b57-f5ab-4eb8-82d4-a24d399b99f6
+  tls: true
+  reality-opts:
+    public-key: jT5prLDhvJ86zZVz5pDX907oQbeZ0Hyb_VcDSiJxQQU
+    short-id: 1378f725da558887
+  servername: github.com
+  client-fingerprint: chrome
+  network: grpc
+  grpc-opts:
+    grpc-service-name: ''
+- name: 🇲🇾 马来西亚 (Malaysia) 02 - xiaohe
   server: forwarded.frnhk.xyz
   port: 53002
   udp: true
   type: vless
-  uuid: 5ce8f582-1494-4e3f-9a2d-7164491cc6fa
+  uuid: f5f0babe-aea2-4f07-a1fc-3c9820253f49
   flow: xtls-rprx-vision
   tls: true
   reality-opts:
@@ -23,11 +38,13 @@ proxy-groups:
   proxies:
   - AUTO
   - 🇲🇾 马来西亚 (Malaysia) 01 - xiaohe
+  - 🇲🇾 马来西亚 (Malaysia) 02 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
   interval: 300
   proxies:
   - 🇲🇾 马来西亚 (Malaysia) 01 - xiaohe
+  - 🇲🇾 马来西亚 (Malaysia) 02 - xiaohe
 rules:
 - MATCH,PROXIES
