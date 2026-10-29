@@ -18,7 +18,7 @@ proxies:
   servername: 45.136.59.28
   client-fingerprint: chrome
 - name: 🇰🇿 哈萨克斯坦 (Kazakhstan) 02 - xiaohe
-  server: 46.8.43.125
+  server: kz-central.v8x2b.lol
   port: 443
   udp: true
   type: vless
