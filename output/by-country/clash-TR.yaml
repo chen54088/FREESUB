@@ -20,32 +20,26 @@ proxies:
   grpc-opts:
     grpc-service-name: GunService
 - name: 🇹🇷 土耳其 (Turkey) 02 - xiaohe
-  server: 151.241.226.201
-  port: 2053
-  udp: true
-  type: vless
-  uuid: 0eed6293-8cf1-4e77-ac10-9c3d50d0b2f8
-  tls: true
-  reality-opts:
-    public-key: bYW_MmB_CUHrsyoCAUKviI2LZdHf63yY2yOPXbih104
-    short-id: 9e419c0759b54d6f
-  servername: www.apple.com
-  client-fingerprint: chrome
-- name: 🇹🇷 土耳其 (Turkey) 03 - xiaohe
-  server: 146.75.56.210
+  server: free.ertebatgoostar.ir
   port: 443
   udp: true
+  type: vmess
+  uuid: 118b0abc-c8f6-476a-9777-bc73f6e2548b
+  alterId: 0
+  cipher: auto
+- name: 🇹🇷 土耳其 (Turkey) 03 - xiaohe
+  server: 206.1.101.85
+  port: 42654
+  udp: true
   type: vless
-  uuid: 2c665ae0-9611-4a12-83e1-47a3ce9468b5
+  uuid: 893845c5-8e4a-48d5-8a85-622f5b7ea950
   tls: true
-  servername: cdn.akamai.steamstatic.com
-  skip-cert-verify: true
-  client-fingerprint: firefox
+  servername: 206.1.101.85
+  skip-cert-verify: false
+  client-fingerprint: chrome
   network: ws
   ws-opts:
     path: /
-    headers:
-      Host: Rastgubash-tarast-shi.global.ssl.fastly.net
 proxy-groups:
 - name: PROXIES
   type: select
