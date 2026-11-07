@@ -4,31 +4,8 @@
   },
   "outbounds": [
     {
-      "type": "trojan",
-      "tag": "🇦🇲 亚美尼亚 (Armenia) 01 - xiaohe",
-      "server": "208.103.161.16",
-      "server_port": 2096,
-      "password": "hWsj5AwIRPF8",
-      "tls": {
-        "enabled": true,
-        "server_name": "rayAnconfIg3-Bhl0ai7j-t2.raYan-coNfig-3.woRKers.dEV",
-        "insecure": false,
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      },
-      "transport": {
-        "type": "ws",
-        "path": "/?ed=2560",
-        "headers": {
-          "Host": "rayAnconfIg3-Bhl0ai7j-t2.raYan-coNfig-3.woRKers.dEV"
-        }
-      }
-    },
-    {
       "type": "vless",
-      "tag": "🇦🇲 亚美尼亚 (Armenia) 02 - xiaohe",
+      "tag": "🇦🇲 亚美尼亚 (Armenia) 01 - xiaohe",
       "server": "157.228.64.24",
       "server_port": 443,
       "uuid": "db80088c-32a1-4cb8-a907-0f3cb7844152",
@@ -52,16 +29,14 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "🇦🇲 亚美尼亚 (Armenia) 01 - xiaohe",
-        "🇦🇲 亚美尼亚 (Armenia) 02 - xiaohe"
+        "🇦🇲 亚美尼亚 (Armenia) 01 - xiaohe"
       ]
     },
     {
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "🇦🇲 亚美尼亚 (Armenia) 01 - xiaohe",
-        "🇦🇲 亚美尼亚 (Armenia) 02 - xiaohe"
+        "🇦🇲 亚美尼亚 (Armenia) 01 - xiaohe"
       ],
       "url": "https://www.gstatic.com/generate_204"
     },
