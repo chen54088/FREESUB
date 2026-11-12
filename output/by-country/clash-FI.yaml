@@ -37,7 +37,7 @@ proxies:
   tls: true
   servername: free.for.member.iiproxy.com
   skip-cert-verify: false
-  client-fingerprint: chrome
+  client-fingerprint: firefox
 proxy-groups:
 - name: PROXIES
   type: select

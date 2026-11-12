@@ -48,13 +48,9 @@
         "enabled": true,
         "server_name": "free.for.member.iiproxy.com",
         "insecure": false,
-        "alpn": [
-          "h2",
-          "http/1.1"
-        ],
         "utls": {
           "enabled": true,
-          "fingerprint": "chrome"
+          "fingerprint": "firefox"
         }
       }
     },
