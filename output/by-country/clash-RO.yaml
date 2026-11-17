@@ -4,30 +4,30 @@ allow-lan: true
 mode: rule
 log-level: info
 proxies:
-- name: 🇦🇷 阿根廷 (Argentina) 01 - xiaohe
-  server: 186.122.177.79
+- name: 🇷🇴 罗马尼亚 (Romania) 01 - xiaohe
+  server: 46.28.67.55
   port: 443
   udp: true
   type: vless
-  uuid: 8197b9b9-8945-460f-99c9-325ef8a8a7c3
+  uuid: d1a6a033-fdbd-46a6-a177-3370ba042b9f
   flow: xtls-rprx-vision
   tls: true
   reality-opts:
-    public-key: pBEW9XYZQsXxjgt44pCQcxoEOe-B1CdxaTdTnL2QhAA
-    short-id: a5d67406
-  servername: ar1.gofizz.in
+    public-key: i2dJ1_XGDpp50qpEclh6SWSWkxt4B0t2hi2qOVQbeSU
+    short-id: d06d78e974491b6e
+  servername: www.cloudflare.com
   client-fingerprint: firefox
 proxy-groups:
 - name: PROXIES
   type: select
   proxies:
   - AUTO
-  - 🇦🇷 阿根廷 (Argentina) 01 - xiaohe
+  - 🇷🇴 罗马尼亚 (Romania) 01 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
   interval: 300
   proxies:
-  - 🇦🇷 阿根廷 (Argentina) 01 - xiaohe
+  - 🇷🇴 罗马尼亚 (Romania) 01 - xiaohe
 rules:
 - MATCH,PROXIES
