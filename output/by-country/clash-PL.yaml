@@ -15,43 +15,35 @@ proxies:
   reality-opts:
     public-key: 1eEtiZY5qDDosntp-9_xFnOIvOBzHy4d3-eA7v11qx0
   servername: gmtrtb.wey-land.net
-  client-fingerprint: firefox
+  client-fingerprint: chrome
 - name: 🇵🇱 波兰 (Poland) 02 - xiaohe
-  server: 179.253.101.162
+  server: 150.251.113.34
   port: 443
   udp: true
   type: vless
-  uuid: fd90e601-a56c-42b8-aab7-aa02d26fcb04
-  flow: xtls-rprx-vision
-  tls: true
-  servername: app.streamru17.net
-  skip-cert-verify: false
-- name: 🇵🇱 波兰 (Poland) 03 - xiaohe
-  server: 54.37.131.126
-  port: 80
-  udp: true
-  type: vmess
-  uuid: 1e55beca-3c69-4fa7-fb1f-15c1b767435f
-  alterId: 0
-  cipher: auto
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: google.whatsapp.snapp.torob.basalam.hesanid8.ir.
-- name: 🇵🇱 波兰 (Poland) 04 - xiaohe
-  server: 82.118.22.161
-  port: 443
-  udp: true
-  type: vless
-  uuid: 05488656-d4bf-4634-8b2e-e4ff5a56c7e2
+  uuid: d7d724b5-17ce-4f3c-877d-dfbf0f07afa1
   flow: xtls-rprx-vision
   tls: true
   reality-opts:
-    public-key: xY1KpNxaIGmi6jfeudYQ_aaLGQqWK_uHStnwUFd2_2E
-    short-id: fa3ea655619a3e78
+    public-key: 8yMLSTbkpJFfbgTjNzotzz7U8OT6AERrclgKdKrXXW8
+    short-id: 150a627d15154cf2
   servername: www.cloudflare.com
+  client-fingerprint: chrome
+- name: 🇵🇱 波兰 (Poland) 03 - xiaohe
+  server: 185.86.147.175
+  port: 443
+  udp: true
+  type: vless
+  uuid: 7955bf18-35c4-412d-aabd-c0b36c793063
+  tls: true
+  servername: r0xnfzk9ud.newwl.pro
+  skip-cert-verify: false
   client-fingerprint: firefox
+  network: ws
+  ws-opts:
+    path: /service/telemetry/045d381f1166/
+    headers:
+      Host: r0xnfzk9ud.newwl.pro
 proxy-groups:
 - name: PROXIES
   type: select
@@ -60,7 +52,6 @@ proxy-groups:
   - 🇵🇱 波兰 (Poland) 01 - xiaohe
   - 🇵🇱 波兰 (Poland) 02 - xiaohe
   - 🇵🇱 波兰 (Poland) 03 - xiaohe
-  - 🇵🇱 波兰 (Poland) 04 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
@@ -69,6 +60,5 @@ proxy-groups:
   - 🇵🇱 波兰 (Poland) 01 - xiaohe
   - 🇵🇱 波兰 (Poland) 02 - xiaohe
   - 🇵🇱 波兰 (Poland) 03 - xiaohe
-  - 🇵🇱 波兰 (Poland) 04 - xiaohe
 rules:
 - MATCH,PROXIES
