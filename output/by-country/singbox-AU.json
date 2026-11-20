@@ -4,26 +4,15 @@
   },
   "outbounds": [
     {
-      "type": "vless",
+      "type": "hysteria2",
       "tag": "🇦🇺 澳大利亚 (Australia) 01 - xiaohe",
-      "server": "104.18.155.229",
-      "server_port": 443,
-      "uuid": "42026ed0-7d74-4585-8e46-0fe6aa4d665a",
+      "server": "13.55.52.44",
+      "server_port": 36712,
+      "password": "linlin-2026",
       "tls": {
         "enabled": true,
-        "server_name": "www.genflix.co.id.r3xxe.eu.cc",
-        "insecure": false,
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      },
-      "transport": {
-        "type": "ws",
-        "path": "/au-do",
-        "headers": {
-          "Host": "www.genflix.co.id.r3xxe.eu.cc"
-        }
+        "server_name": "13.55.52.44",
+        "insecure": true
       }
     },
     {
