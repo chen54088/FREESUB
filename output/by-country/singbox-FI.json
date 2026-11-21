@@ -14,7 +14,7 @@
     {
       "type": "vless",
       "tag": "🇫🇮 芬兰 (Finland) 02 - xiaohe",
-      "server": "172.64.79.163",
+      "server": "172.67.67.89",
       "server_port": 2083,
       "uuid": "a6ad7987-f17e-41fa-a752-72db9a725eb2",
       "tls": {
