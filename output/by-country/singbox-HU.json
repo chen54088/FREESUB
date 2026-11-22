@@ -5,13 +5,13 @@
   "outbounds": [
     {
       "type": "vless",
-      "tag": "🌐 其他地区 (Other) 01 - xiaohe",
-      "server": "104.18.10.153",
-      "server_port": 443,
-      "uuid": "debafe5b-6760-4b00-b0b2-ee30cbf769f0",
+      "tag": "🇭🇺 匈牙利 (Hungary) 01 - xiaohe",
+      "server": "172.67.131.125",
+      "server_port": 2083,
+      "uuid": "f418674e-f518-4318-8ff9-e10000000046",
       "tls": {
         "enabled": true,
-        "server_name": "portland-wins-robbie-skirt.trycloudflare.com",
+        "server_name": "smart-edge-424.arti98399-1905.workers.dev",
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -20,9 +20,9 @@
       },
       "transport": {
         "type": "ws",
-        "path": "/e0843c8ad581",
+        "path": "/sync",
         "headers": {
-          "Host": "portland-wins-robbie-skirt.trycloudflare.com"
+          "Host": "smart-edge-424.arti98399-1905.workers.dev"
         }
       }
     },
@@ -31,14 +31,14 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "🌐 其他地区 (Other) 01 - xiaohe"
+        "🇭🇺 匈牙利 (Hungary) 01 - xiaohe"
       ]
     },
     {
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "🌐 其他地区 (Other) 01 - xiaohe"
+        "🇭🇺 匈牙利 (Hungary) 01 - xiaohe"
       ],
       "url": "https://www.gstatic.com/generate_204"
     },
