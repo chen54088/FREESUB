@@ -29,19 +29,6 @@ proxies:
   servername: 31tawwo0.virtual-network.lol
   skip-cert-verify: false
   client-fingerprint: firefox
-- name: 🇵🇱 波兰 (Poland) 04 - xiaohe
-  server: 191.217.253.12
-  port: 443
-  udp: true
-  type: vless
-  uuid: 6dd17e9f-5b7c-466d-a53a-7c30f5dc8338
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: fNfokzklCF4l_c8k8PciOCjm5ecNoF_sNLjEtaO-xzI
-    short-id: db04ce8bdb8900f1
-  servername: 191.217.253.12
-  client-fingerprint: chrome
 proxy-groups:
 - name: PROXIES
   type: select
@@ -50,7 +37,6 @@ proxy-groups:
   - 🇵🇱 波兰 (Poland) 01 - xiaohe
   - 🇵🇱 波兰 (Poland) 02 - xiaohe
   - 🇵🇱 波兰 (Poland) 03 - xiaohe
-  - 🇵🇱 波兰 (Poland) 04 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
@@ -59,6 +45,5 @@ proxy-groups:
   - 🇵🇱 波兰 (Poland) 01 - xiaohe
   - 🇵🇱 波兰 (Poland) 02 - xiaohe
   - 🇵🇱 波兰 (Poland) 03 - xiaohe
-  - 🇵🇱 波兰 (Poland) 04 - xiaohe
 rules:
 - MATCH,PROXIES
