@@ -5,16 +5,29 @@ mode: rule
 log-level: info
 proxies:
 - name: 🇷🇺 俄罗斯 (Russia) 01 - xiaohe
-  server: 136.148.83.71
+  server: 136.148.83.69
   port: 443
   udp: true
   type: vless
-  uuid: 00000000-0000-0001-0000-000000000000
+  uuid: 666821a2-5c3d-0001-a56f-5a3a562d7324
   tls: true
-  servername: wccfu-ru-79dc.my-fade.cloud
+  servername: szqbx-ru-77dc.my-fade.cloud
   skip-cert-verify: false
   client-fingerprint: qq
 - name: 🇷🇺 俄罗斯 (Russia) 02 - xiaohe
+  server: 201.51.12.98
+  port: 443
+  udp: true
+  type: vless
+  uuid: 38308ff1-5aa9-494f-a25a-0f2870d56b3e
+  tls: true
+  servername: vps3.nemnogogo.com
+  skip-cert-verify: false
+  client-fingerprint: firefox
+  network: grpc
+  grpc-opts:
+    grpc-service-name: mobile.api.Event
+- name: 🇷🇺 俄罗斯 (Russia) 03 - xiaohe
   server: xssite.webredirect.org
   port: 443
   udp: true
@@ -27,7 +40,7 @@ proxies:
   network: grpc
   grpc-opts:
     grpc-service-name: grpc-ru
-- name: 🇷🇺 俄罗斯 (Russia) 03 - xiaohe
+- name: 🇷🇺 俄罗斯 (Russia) 04 - xiaohe
   server: 147.45.175.81
   port: 443
   udp: true
@@ -39,7 +52,7 @@ proxies:
   client-fingerprint: firefox
   network: ws
   ws-opts:
-    path: wsru
+    path: /wsru
     headers:
       Host: xsru2.freeddns.org
 proxy-groups:
@@ -50,6 +63,7 @@ proxy-groups:
   - 🇷🇺 俄罗斯 (Russia) 01 - xiaohe
   - 🇷🇺 俄罗斯 (Russia) 02 - xiaohe
   - 🇷🇺 俄罗斯 (Russia) 03 - xiaohe
+  - 🇷🇺 俄罗斯 (Russia) 04 - xiaohe
 - name: AUTO
   type: url-test
   url: https://www.gstatic.com/generate_204
@@ -58,5 +72,6 @@ proxy-groups:
   - 🇷🇺 俄罗斯 (Russia) 01 - xiaohe
   - 🇷🇺 俄罗斯 (Russia) 02 - xiaohe
   - 🇷🇺 俄罗斯 (Russia) 03 - xiaohe
+  - 🇷🇺 俄罗斯 (Russia) 04 - xiaohe
 rules:
 - MATCH,PROXIES
